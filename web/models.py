@@ -7,22 +7,22 @@ class Song(models.Model):
     album = models.CharField(max_length=100)
     duration = models.DurationField()
     lyrics = models.TextField()
-    artists = models.ManyToManyField('Artist', on_delete=models.CASCADE)
-    genre = models.ManyToManyField('Genre', on_delete=models.SET_NULL, null=True)
+    artists = models.ManyToManyField('Artist')
+    genre = models.ManyToManyField('Genre')
     def __str__(self):
         return self.title
 class Artist(models.Model):
     name = models.CharField(max_length=100)
     nationality = models.CharField(max_length=100)
     monthly_listeners = models.IntegerField()
-    songs = models.ManyToManyField('Song', on_delete=models.CASCADE)
-    genres = models.ManyToManyField('Genre', on_delete=models.SET_NULL, null=True)
+    songs = models.ManyToManyField('Song')
+    genres = models.ManyToManyField('Genre')
     def __str__(self):
         return self.name
 
 class Genre(models.Model):
     name = models.CharField(max_length=100)
-    songs = models.ManyToManyField('Song', on_delete=models.SET_NULL, null=True)
-    artists = models.ManyToManyField('Artist', on_delete=models.SET_NULL, null=True)
+    songs = models.ManyToManyField('Song')
+    artists = models.ManyToManyField('Artist')
     def __str__(self):
         return self.name
