@@ -2,7 +2,8 @@ from django.db import models
 
 # This is an example of a model in Django so that you can see how you can define your own models :D
 # DON'T FORGET to run `python manage.py makemigrations` and `python manage.py migrate` after changing this file!!!
-
+class Song(models.Model):
+    title = models.CharField(max_length=10000)
 class Author(models.Model):
     name = models.CharField(max_length=100)
     birth_date = models.DateField()
