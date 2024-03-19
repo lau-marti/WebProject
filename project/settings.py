@@ -78,11 +78,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-<<<<<<< HEAD
         'NAME': str(BASE_DIR / 'db.sqlite3'),
-=======
-        'NAME': str(BASE_DIR / 'db.sqlite3'), # Convertir a cadena de texto
->>>>>>> 6259019bf12bd6be4d07038e0ded9cb529c6bc30
     }
 }
 

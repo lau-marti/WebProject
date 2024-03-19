@@ -1,3 +1,24 @@
+body {
+    background-color: #212121;
+    font-family: "URW Gothic";
+}
+
+.logo {
+    max-width: 50px; /* Establece el ancho máximo de la imagen */
+    max-height: 50px; /* Establece la altura máxima de la imagen */
+    margin-right: 10px;
+}
+
+.header {
+    display: flex; /* Establece un contenedor flexible */
+    align-items: center; /* Centra verticalmente los elementos dentro del contenedor */
+    justify-content: center; /* Centra horizontalmente los elementos dentro del contenedor */
+    margin-top: 10px
+}
+
 h1 {
-    color: green;
+    /*color: #1db954;*/
+    color: red;
+    text-align: center; /* Centra el texto dentro del h1 */
+    margin: 0; /* Elimina cualquier margen predeterminado que pueda tener el h1 */
 }
