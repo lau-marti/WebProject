@@ -4,6 +4,7 @@ body {
 }
 
 .logo {
+    display: flex;
     max-width: 50px; /* Establece el ancho máximo de la imagen */
     max-height: 50px; /* Establece la altura máxima de la imagen */
     margin-right: 10px;
@@ -17,8 +18,14 @@ body {
 }
 
 h1 {
-    /*color: #1db954;*/
-    color: red;
+    color: #1db954;
     text-align: center; /* Centra el texto dentro del h1 */
     margin: 0; /* Elimina cualquier margen predeterminado que pueda tener el h1 */
+}
+
+.Paragraf1 {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
