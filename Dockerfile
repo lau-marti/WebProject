@@ -10,7 +10,7 @@ WORKDIR /app
 # Install dependencies
 RUN pip install poetry
 COPY poetry.lock pyproject.toml /app/
-RUN poetry install
+RUN poetry install --no-dev
 
 # Copy project
 COPY . /app/
