@@ -1,6 +1,11 @@
 body {
     background-color: #212121;
     font-family: "URW Gothic";
+    margin: 0;
+    padding: 0;
+    background-image: url(https://s1.elespanol.com/2022/09/28/alicante/cultura/706689938_227552936_1024x576.jpg);
+    background-size: cover;
+    background-position: center; /* Para centrar la imagen */
 }
     .login-container {
         background-color: #fff;
