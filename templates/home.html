@@ -5,9 +5,30 @@
 {% block content %}
 {% if user.is_authenticated %}
 Hi {{ user.username }}!
-<form action="{% url 'logout' %}" method="post"> <!-- We can add a form to log out here -->
-  {% csrf_token %}
-  <button type="submit">Log Out</button>
+
+<div class="button-container">
+  <div class="centered-text">
+    <p style="color: white;">Tria un servei: </p>
+  </div>
+  <div class="button-row">
+    <button class="large-button"> Funció 1</button>
+    <button class="large-button"> Funció 2</button>
+  </div>
+  <div class="button-row">
+    <button class="large-button"> Funció 3</button>
+    <button class="large-button"> Funció 4</button>
+  </div>
+</div>
+
+
+<div class="top-right-container">
+  <form action="{% url 'logout' %}" method="post"> <!-- Formulario para cerrar sesión -->
+    {% csrf_token %}
+    <button type="submit">Log Out</button>
+  </form>
+</div>
+
+
 </form>
 {% else %}
 <p class="Paragraf1">You are not logged in</p>

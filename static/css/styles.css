@@ -124,3 +124,42 @@ h1 {
     font-size: smaller; /* Esto hará que el texto sea más pequeño */
     text-decoration: underline; /* Elimina el subrayado */
 }
+
+.button-container {
+    position: absolute; /* Posicionamiento absoluto */
+    top: 50%; /* Ubica el contenedor en el 50% del borde superior */
+    left: 50%; /* Ubica el contenedor en el 50% del borde izquierdo */
+    transform: translate(-50%, -50%); /* Centra el contenedor exactamente en el centro */
+    display: flex;
+    flex-direction: column; /* Organiza los botones en columnas */
+    align-items: center; /* Centra horizontalmente los botones */
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.large-button {
+    font-size: 24px;
+    padding: 100px 200px;
+    margin: 5px; /* Ajusta el margen entre los botones */
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+
+}
+
+.centered-text {
+    text-align: center; /* Centra el texto horizontalmente */
+    font-size: 24px;
+}
+
+.top-right-container {
+    position: absolute; /* Posicionamiento absoluto */
+    top: 90px; /* Ajusta según la altura de tu header */
+    right: 20px; /* Ajusta según el espacio que deseas desde el borde derecho */
+}
