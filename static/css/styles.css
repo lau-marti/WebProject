@@ -8,7 +8,7 @@ body {
 .button{
     display: inline-block;
     padding: 10px 20px;
-    background-color: #1db954;
+    background-color: #16a085;
     color: #ffffff;
     text-decoration: none;
     border: none;
@@ -21,7 +21,7 @@ body {
 }
 
 .button:hover {
-    background-color: #45a049;
+    background-color: #026e59;
 }
 
 
