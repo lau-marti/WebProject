@@ -3,10 +3,25 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<h2>Sign up</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form }}
-  <button type="submit">Sign Up</button>
-</form>
+<div class="signup-form">
+    <h2>Registre</h2>
+    <form action="{% url 'signup' %}" method="post">
+        {% csrf_token %}
+        <input type="text" placeholder="Nom d'usuari" name="username" required>
+        <input type="email" placeholder="Correu electrònic" name="email" required>
+        <input type="password" placeholder="Contrasenya" name="password1" required>
+        <input type="password" placeholder="Confirmar contrasenya" name="password2" required>
+        <button type="submit">Registrar-se</button>
+    </form>
+    {% if form.errors %}
+    <div class="error-container">
+        <strong>Error:</strong> Por favor, corrija los siguientes errores:<br>
+        {% for field in form %}
+                {% for error in field.errors %}
+                    <span class="error-message">{{ field.label }}: {{ error }}</span><br>
+                {% endfor %}
+            {% endfor %}
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
