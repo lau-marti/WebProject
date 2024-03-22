@@ -8,7 +8,7 @@ body {
 .button{
     display: inline-block;
     padding: 10px 20px;
-    background-color: #ac0aa4;
+    background-color: #1db954;
     color: #ffffff;
     text-decoration: none;
     border: none;
@@ -18,23 +18,12 @@ body {
     font-family: "URW Gothic";
     transition: background-color 0.3s ease;
     cursor: pointer;
-
 }
-.button-form {
-    background-color: #4caf50;
-    font-family: "URW Gothic";
-    color: white;
-    padding: 10px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    width: 100%;
 
-}
-.button-form:hover{
+.button:hover {
     background-color: #45a049;
 }
+
 
   /* Estilos generales para el formulario */
 .login-form {
@@ -103,7 +92,6 @@ body {
 .container-home-buttons form{
     margin: 10px;
 }
-
 
 .logo {
     display: flex;
