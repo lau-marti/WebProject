@@ -3,9 +3,6 @@ body {
     font-family: "URW Gothic";
     margin: 0;
     padding: 0;
-    background-image: url(https://s1.elespanol.com/2022/09/28/alicante/cultura/706689938_227552936_1024x576.jpg);
-    background-size: cover;
-    background-position: center; /* Para centrar la imagen */
 }
   /* Estilos generales para el formulario */
 .login-form {
@@ -122,4 +119,8 @@ h1 {
     height: 2px;
     background-color: green;
     margin: 20px 0;
+}
+.return-home-link {
+    font-size: smaller; /* Esto hará que el texto sea más pequeño */
+    text-decoration: underline; /* Elimina el subrayado */
 }
