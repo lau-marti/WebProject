@@ -31,8 +31,21 @@ Hi {{ user.username }}!
 
 </form>
 {% else %}
-<p class="Paragraf1">You are not logged in</p>
-<a href="{% url 'login' %}">Log In</a> <!-- We can now add a link to the login page here -->
-<a href="{% url 'signup' %}">Sign Up</a> <!-- We can now add a link to the signup page here -->
+
+<div class="container-home">
+    <h2>Bienvenido</h2>
+    <p>Por favor, inicia sesión o regístrate</p>
+    <div class = "container-home-buttons">
+
+        <form action="{% url 'login' %}" method="post"> <!-- We can add a form to log out here -->
+            {% csrf_token %}
+            <button class="button" type="submit">Log In</button>
+        </form>
+        <form action="{% url 'signup' %}" method="post"> <!-- We can add a form to log out here -->
+            {% csrf_token %}
+            <button class="button" type="submit">Sign Up</button>
+        </form>
+    </div>
+</div>
 {% endif %}
 {% endblock %}
