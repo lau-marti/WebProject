@@ -9,15 +9,12 @@
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
 </head>
-
+<div class="header">
+      <img src="{% static 'images/logo.png' %}" class="logo">
+      <h1>MusicLandTerritory</h1>
+</div>
 <body>
   <main>
-    <div class="header">
-      <img src="{% static 'images/logo.png' %}" class="logo">
-      <h1>Proyecto web</h1>
-    </div>
-
-    <div class="separator"> </div>
 
 
     {% block content %}
