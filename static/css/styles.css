@@ -142,33 +142,37 @@ h1 {
     position: absolute; /* Posicionamiento absoluto */
     top: 50%; /* Ubica el contenedor en el 50% del borde superior */
     left: 50%; /* Ubica el contenedor en el 50% del borde izquierdo */
+    margin-top: 10%;
     transform: translate(-50%, -50%); /* Centra el contenedor exactamente en el centro */
     display: flex;
     flex-direction: column; /* Organiza los botones en columnas */
     align-items: center; /* Centra horizontalmente los botones */
+}
+.button-container p{
+    text-align: center; /* Centra el texto horizontalmente */
+    font-size: 20px;
 }
 
 .button-row {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 40%;
 }
 
 .large-button {
-    font-size: 32px;
+    font-size: 20px;
     padding: 100px 200px;
-    margin: 5px; /* Ajusta el margen entre los botones */
+    margin: 2%; /* Ajusta el margen entre los botones */
     background-color: #16a085;
     border: none;
     color: white;
     cursor: pointer;
     border-radius: 10px;
+    width: 50%;
+    height: 50%;
 
-}
-
-.centered-text {
-    text-align: center; /* Centra el texto horizontalmente */
-    font-size: 32px;
 }
 
 .top-right-container {
