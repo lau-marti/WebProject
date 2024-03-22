@@ -137,3 +137,7 @@ h1 {
     background-color: green;
     margin: 20px 0;
 }
+.return-home-link {
+    font-size: smaller; /* Esto hará que el texto sea más pequeño */
+    text-decoration: underline; /* Elimina el subrayado */
+}
