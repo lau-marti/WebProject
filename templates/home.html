@@ -24,7 +24,7 @@ Hi {{ user.username }}!
 <div class="top-right-container">
   <form action="{% url 'logout' %}" method="post"> <!-- Formulario para cerrar sesión -->
     {% csrf_token %}
-    <button type="submit">Log Out</button>
+    <button class="button" type="submit">Log Out</button>
   </form>
 </div>
 

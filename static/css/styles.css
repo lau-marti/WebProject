@@ -155,10 +155,10 @@ h1 {
 }
 
 .large-button {
-    font-size: 24px;
+    font-size: 32px;
     padding: 100px 200px;
     margin: 5px; /* Ajusta el margen entre los botones */
-    background-color: #4caf50;
+    background-color: #16a085;
     border: none;
     color: white;
     cursor: pointer;
@@ -168,7 +168,7 @@ h1 {
 
 .centered-text {
     text-align: center; /* Centra el texto horizontalmente */
-    font-size: 24px;
+    font-size: 32px;
 }
 
 .top-right-container {
