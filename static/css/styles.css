@@ -3,10 +3,39 @@ body {
     font-family: "URW Gothic";
     margin: 0;
     padding: 0;
-    background-image: url(https://s1.elespanol.com/2022/09/28/alicante/cultura/706689938_227552936_1024x576.jpg);
-    background-size: cover;
-    background-position: center; /* Para centrar la imagen */
 }
+
+.button{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ac0aa4;
+    color: #ffffff;
+    text-decoration: none;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: "URW Gothic";
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+
+}
+.button-form {
+    background-color: #4caf50;
+    font-family: "URW Gothic";
+    color: white;
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 100%;
+
+}
+.button-form:hover{
+    background-color: #45a049;
+}
+
   /* Estilos generales para el formulario */
 .login-form {
     max-width: 400px;
@@ -33,22 +62,6 @@ body {
     border-radius: 4px;
 }
 
-/* Estilos para el botón de enviar */
-.login-form button {
-    background-color: #4caf50;
-    color: white;
-    padding: 12px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-}
-
-/* Estilos para el botón de enviar al pasar el cursor */
-.login-form button:hover {
-    background-color: #45a049;
-}
 .signup-form {
     max-width: 400px;
     margin: 0 auto; /* Esto centra el formulario horizontalmente */
@@ -75,22 +88,23 @@ body {
     border-radius: 4px;
 }
 
-/* Estilos para el botón de enviar */
-.signup-form button {
-    background-color: #4caf50;
+.container-home {
+    text-align: center;
+    margin-top: 100px;
+}
+.container-home h2, p{
     color: white;
-    padding: 12px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
+}
+.container-home-buttons {
+    display: flex;
+    text-align: center;
+    justify-content: center; /* Centra elementos verticalmente */
+}
+.container-home-buttons form{
+    margin: 10px;
 }
 
-/* Estilos para el botón de enviar al pasar el cursor */
-.signup-form button:hover {
-    background-color: #45a049;
-}
+
 .logo {
     display: flex;
     max-width: 50px; /* Establece el ancho máximo de la imagen */
