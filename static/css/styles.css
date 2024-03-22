@@ -175,6 +175,11 @@ h1 {
 
 }
 
+.centered-text {
+    text-align: center; /* Centra el texto horizontalmente */
+    font-size: 32px;
+}
+
 .top-right-container {
     position: absolute; /* Posicionamiento absoluto */
     top: 90px; /* Ajusta según la altura de tu header */
