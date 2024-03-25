@@ -21,7 +21,7 @@ cd <NOM DE LA CARPETA>
 poetry install
 ```
 
-## Configuració de Docker
+## Execució del programa
 1. Assegurat que tens instal·lat Docker i Docker Compose instal·lats i obre l'aplicació Docker
 2. Execució del programa
 ```bash
