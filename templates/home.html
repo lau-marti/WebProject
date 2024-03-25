@@ -4,7 +4,14 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-Hi {{ user.username }}!
+<div class="separator"></div>
+<div class="top-container">
+    <h2>Hi {{ user.username }}!</h2>
+  <form action="{% url 'logout' %}" method="post"> <!-- Formulario para cerrar sesión -->
+    {% csrf_token %}
+    <button class="button" type="submit">Log Out</button>
+  </form>
+</div>
 
 <div class="button-container">
     <p style="color: white;">Tria un servei: </p>
@@ -16,14 +23,6 @@ Hi {{ user.username }}!
     <button class="large-button"> Funció 3</button>
     <button class="large-button"> Funció 4</button>
   </div>
-</div>
-
-
-<div class="top-right-container">
-  <form action="{% url 'logout' %}" method="post"> <!-- Formulario para cerrar sesión -->
-    {% csrf_token %}
-    <button class="button" type="submit">Log Out</button>
-  </form>
 </div>
 
 
