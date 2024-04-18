@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # This is an example of a model in Django so that you can see how you can define your own models :D
@@ -30,6 +31,14 @@ class Genre(models.Model):
     name = models.CharField(max_length=100)
     songs = models.ManyToManyField('Song', related_name='songs_to_genre')
     artists = models.ManyToManyField('Artist', related_name='artists_to_genre')
+
+    def __str__(self):
+        return self.name
+
+class Playlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # Si es borra l'usuari, també les seves playlist
+    name = models.CharField(max_length=100)
+    songs = models.ManyToManyField('Song', related_name='songs_to_playlist')
 
     def __str__(self):
         return self.name

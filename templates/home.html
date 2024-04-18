@@ -16,7 +16,9 @@
 <div class="button-container">
     <p style="color: white;">Tria un servei: </p>
   <div class="button-row">
-    <button class="large-button"> Funció 1</button>
+      <form action="{% url 'create_playlist' %}" method="get">
+        <button class="large-button" type="submit">Crea una playlist</button>
+      </form>
     <button class="large-button"> Funció 2</button>
   </div>
   <div class="button-row">
