@@ -12,11 +12,25 @@
     <button class="button" type="submit">Log Out</button>
   </form>
 </div>
+<h1>
+    Playlists
+    {% if user.is_authenticated %} (<a href="url 'web:playlist_create'%}">add</a>){% endif %}
+</h1>
+<ul>
+    {% for playlist in latest_playlist_list %}
+        <li><a href="{%url 'web:playlist_detail' playlist.id %}">
+            {{playlist.name}} </a></li>
+    {%empty%}<li> Sorry, no playlist registred yet. </li>
+    {% endfor %}
+
+
+
+</ul>
 
 <div class="button-container">
     <p style="color: white;">Tria un servei: </p>
   <div class="button-row">
-      <form action="{% url 'create_playlist' %}" method="get">
+      <form action="{% url 'web:playlist_create' %}" method="get">
         <button class="large-button" type="submit">Crea una playlist</button>
       </form>
     <button class="large-button"> Funció 2</button>

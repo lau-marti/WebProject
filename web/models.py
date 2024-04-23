@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import date
+from django.urls import reverse
 
 
 # This is an example of a model in Django so that you can see how you can define your own models :D
@@ -12,8 +14,11 @@ class Song(models.Model):
     artists = models.ManyToManyField('Artist', related_name='artists_to_song')
     genre = models.ManyToManyField('Genre', related_name='genres_to_song')
 
-    def __str__(self):
-        return self.title
+    def __unicode__(self):
+        return u"%s" % self.title
+
+    def get_absolute_url(self):
+        return reverse('web:song_detail', kwargs={'pkr': self.song.pk, 'pk': self.pk})
 
 
 class Artist(models.Model):
@@ -38,7 +43,11 @@ class Genre(models.Model):
 class Playlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE) # Si es borra l'usuari, també les seves playlist
     name = models.CharField(max_length=100)
-    songs = models.ManyToManyField('Song', related_name='songs_to_playlist')
+    date = models.DateField(default=date.today)
+    songs = models.ManyToManyField(Song, related_name='songs_to_playlist')
 
-    def __str__(self):
-        return self.name
+    def __unicode__(self):
+        return u"%s" % self.name
+
+    def get_absolute_url(self):
+        return reverse('web:playlist_detail', kwargs={'pk': self.pk})
