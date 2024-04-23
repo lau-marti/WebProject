@@ -2,7 +2,7 @@ from django.urls import path
 from django.utils import timezone
 from django.views.generic import DetailView, ListView
 from web.forms import PlaylistForm
-from web.views import PlaylistCreate, PlaylistDetail, LoginRequiredCheckIsOwnerUpdateView
+from web.views import PlaylistCreate, PlaylistDetail, LoginRequiredCheckIsOwnerUpdateView, SongCreate
 from web.models import Song, Playlist
 
 app_name = "web"
@@ -39,4 +39,9 @@ urlpatterns = [
             model=Playlist,
             form_class=PlaylistForm),
         name='playlist_edit'),
+
+    # Create a playlist, ex.: /musicterritory/playlists/1/songs/create/
+    path('playlists/<int:pk>/songs/create',
+        SongCreate.as_view(),
+        name='song_create'),
 ]

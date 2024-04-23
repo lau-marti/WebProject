@@ -21,9 +21,10 @@ async function obtenerToken() {
 }
 
 // Función para buscar información de una canción
-async function buscarCancion(nombreCancion) {
-  await obtenerToken();
+async function buscarCancion() {
 
+  const nombreCancion = document.getElementById('searchInput').value;
+  await obtenerToken();
   try {
     const response = await spotifyApi.searchTracks('track:' + nombreCancion, { limit: 5 });
 
@@ -52,16 +53,4 @@ async function buscarCancion(nombreCancion) {
   } catch (error) {
     console.error("Error al buscar la canción:", error);
   }
-}
-
-// Obtener el nombre de la canción de los argumentos de la línea de comandos
-const nombreCancion = process.argv[2];
-
-// Verificar si se proporcionó el nombre de la canción como argumento
-if (nombreCancion) {
-  // Si se proporcionó el nombre de la canción, llamar a la función buscarCancion con ese nombre
-  buscarCancion(nombreCancion);
-} else {
-  // Si no se proporcionó el nombre de la canción, mostrar un mensaje de error
-  console.error("Por favor, proporciona el nombre de la canción como argumento.");
 }

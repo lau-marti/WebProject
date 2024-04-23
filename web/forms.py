@@ -12,4 +12,4 @@ class PlaylistForm(ModelForm):
 class SongForm(ModelForm):
     class Meta:
         model = Song
-        exclude = ('user','playlist',)
+        exclude = ('user','playlist','name','artists')
