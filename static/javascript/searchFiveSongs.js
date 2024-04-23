@@ -29,26 +29,32 @@ async function buscarCancion() {
     const response = await spotifyApi.searchTracks('track:' + nombreCancion, { limit: 5 });
 
     if (response.body.tracks.items.length > 0) {
-      console.log("Se encontraron las siguientes canciones:");
+      document.getElementById('searchResults').innerHTML = '';
 
       for (let i = 0; i < response.body.tracks.items.length; i++) {
         const cancion = response.body.tracks.items[i];
-        console.log(`Canción ${i + 1}:`);
-        console.log("Nombre:", cancion.name);
-        console.log("Artista(s):", cancion.artists.map(artist => artist.name).join(", "));
-        console.log("Álbum:", cancion.album.name);
-        console.log("URL del álbum:", cancion.album.external_urls.spotify);
-        console.log("URL de la imagen del álbum:", cancion.album.images[0].url);
+        const resultDiv = document.createElement('div');
+        resultDiv.innerHTML = `
+          <p>Canción ${i + 1}:</p>
+          <p>Nombre: ${cancion.name}</p>
+          <p>Artista(s): ${cancion.artists.map(artist => artist.name).join(", ")}</p>
+          <p>Álbum: ${cancion.album.name}</p>
+          <p>URL del álbum: <a href="${cancion.album.external_urls.spotify}" target="_blank">${cancion.album.external_urls.spotify}</a></p>
+          <p>URL de la imagen del álbum: <img src="${cancion.album.images[0].url}" alt="Imagen del álbum"></p>
+          <p>Género(s): ${await obtenerGenerosArtistas(cancion.artists)}</p>
+          <hr>
+        `;
+        document.getElementById('searchResults').appendChild(resultDiv);
 
         // Obtener los géneros de los artistas asociados
-        const artistasIds = cancion.artists.map(artist => artist.id);
-        const artistasInfo = await Promise.all(artistasIds.map(artistId => spotifyApi.getArtist(artistId)));
+        //const artistasIds = cancion.artists.map(artist => artist.id);
+        //const artistasInfo = await Promise.all(artistasIds.map(artistId => spotifyApi.getArtist(artistId)));
 
-        console.log("Género(s):", artistasInfo.map(artistInfo => artistInfo.body.genres.join(", ")).join(", "));
-        console.log("--------------------");
+        //console.log("Género(s):", artistasInfo.map(artistInfo => artistInfo.body.genres.join(", ")).join(", "));
+        //console.log("--------------------");
       }
     } else {
-      console.log("No se encontraron canciones con ese nombre.");
+      document.getElementById('searchResults').innerHTML = 'No se encontraron canciones con ese nombre.';
     }
   } catch (error) {
     console.error("Error al buscar la canción:", error);

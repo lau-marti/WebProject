@@ -1,9 +1,13 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Busqueda de Cançons{% endblock %}
+
 {% block content %}
+
     <input type="text" id="searchInput" placeholder="Buscar...">
-    <button onclick="(buscarCancion(nombreCancion))">Buscar</button>
+    <button onclick= "buscarCancion()" >Buscar</button>
     <div id="searchResults"></div>
 
-    <script src="static/javascript/searchFiveSongs.js"></script>
+    <script src="{% static 'javascript/searchFiveSongs.js' %}"></script>
+
 {% endblock %}
