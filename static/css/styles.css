@@ -5,7 +5,7 @@ body {
     padding: 0;
 }
 
-.button{
+.genericButton{     /*genericButton = button*/
     display: inline-block;
     padding: 10px 20px;
     background-color: #16a085;
@@ -18,11 +18,14 @@ body {
     font-family: "URW Gothic";
     transition: background-color 0.3s ease;
     cursor: pointer;
+    margin: 10px;
 }
 
-.button:hover {
+.genericButton:hover {
     background-color: #026e59;
 }
+
+
 
 
   /* Estilos generales para el formulario */
@@ -162,20 +165,58 @@ h1 {
     height: 40%;
 }
 
-.large-button {
-    font-size: 20px;
-    padding: 100px 200px;
-    margin: 2%; /* Ajusta el margen entre los botones */
-    background-color: #16a085;
-    border: none;
-    color: white;
-    cursor: pointer;
-    border-radius: 10px;
-    width: 50%;
-    height: 50%;
-
+.row {
+    display: flex;
 }
 
+.column {
+    flex: 50%; /* Hace que ambas columnas ocupen el mismo ancho */
+    padding: 10px; /* Añade un espacio entre el contenido y los bordes de las columnas */
+}
+
+.large-button {
+    font-size: 20px;
+    display: flex;
+}
+
+.small-button {
+    font-size: 10px;
+    display: flex;
+}
+
+/* Estilo del contenedor de la barra de búsqueda */
+.search-container {
+    width: 100%;
+    position: relative;
+    align-items: center;
+    display: flex;
+}
+
+/* Estilo de la barra de búsqueda */
+.search-input {
+    width: 80%;
+    padding: 10px;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+/*
+/* Estilo del botón de búsqueda */
+/*
+.search-button {
+    position: absolute;
+    right: 10px;
+    background: #16a085;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.search-button:hover {
+    background-color: #026e59;
+}
+*/
 .centered-text {
     text-align: center; /* Centra el texto horizontalmente */
     font-size: 32px;
