@@ -49,6 +49,7 @@ class SongCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user  # Assignem l'usuari actual a la llista de reproducció
         return super(SongCreate, self).form_valid(form)
 
+
 def add_song(request, pk):
     if request.method == 'POST':
         # Obtener los datos de la solicitud POST

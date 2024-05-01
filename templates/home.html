@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}Home{% endblock %}
 
 {% block content %}
@@ -39,13 +39,14 @@
         </form>
     </div>
     <div class="column" style="background-color:#bbb;">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Buscar (canció / artista / génere)...">
-            <button class="genericButton large-button">Buscar</button>
-        </div>
-        <button class="genericButton small-button"> Funció 2</button>
-        <button class="genericButton small-button"> Funció 3</button>
-        <button class="genericButton small-button"> Funció 4</button>
+        <input class = search-input type="text" id="searchInput" placeholder="Search for songs, artists, etc.">
+        <button class = genericButton onclick="buscarCancion()">Search</button>
+         <div id="searchResults"></div>
+
+        {% block scripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="{% static 'javascript/searchFiveSongs.js' %}"></script>
+        {% endblock %}
     </div>
 </div>
 
@@ -68,4 +69,3 @@
 </div>
 {% endif %}
 {% endblock %}
-
