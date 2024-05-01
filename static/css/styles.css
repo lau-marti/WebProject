@@ -255,3 +255,25 @@ h1 {
     align-items: center;
     gap: 1%
 }
+
+.deleteButton {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: red;
+    color: #ffffff;
+    text-decoration: none;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: "URW Gothic";
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.cançons {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+}

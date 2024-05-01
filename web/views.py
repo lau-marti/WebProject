@@ -1,6 +1,6 @@
 from django.core.exceptions import PermissionDenied
-from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.http import JsonResponse,HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
@@ -49,7 +49,6 @@ class SongCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user  # Assignem l'usuari actual a la llista de reproducció
         return super(SongCreate, self).form_valid(form)
 
-
 def add_song(request, pk):
     if request.method == 'POST':
         # Obtener los datos de la solicitud POST
@@ -72,4 +71,12 @@ def add_song(request, pk):
         return JsonResponse({'mensaje': 'Canción agregada a la playlist correctamente'})
     else:
         # Si la solicitud no es POST, devolver un error
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+def delete_song(request, song_id):
+    if request.method == 'POST':
+        song = get_object_or_404(Song, id=song_id)
+        song.delete()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)

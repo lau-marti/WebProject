@@ -6,13 +6,17 @@
 <div class="container">
     <div class="playlist-header">
         <h1 class="PlaylistName">{{ playlist.name }}</h1>
-        <button class="button" type="button">
-            Afegir Cançó
-        </button>
+        <button class="genericButton">Afegir Cançó</button>
     </div>
-    <ul>
+    <ul class="cançons">
     {% for song in playlist.songs.all %}
-        <li>{{ song.title }} - {{ song.artist }}</li>
+        <li style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="Paragraf1">{{ song.title }} - {{ song.artist }}</span>
+            <form action="{% url 'web:delete_song' song.id %}" method="POST" class="inline">
+                {% csrf_token %}
+                <button type="submit" class="deleteButton">Eliminar</button>
+            </form>
+        </li>
     {% endfor %}
     </ul>
 </div>
