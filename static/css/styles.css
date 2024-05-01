@@ -235,3 +235,23 @@ h1 {
 .top-container h2{
     color: white;
 }
+
+.error_404{
+    background-color: white;
+
+}
+
+.PlaylistName {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding-top: 1%;
+}
+
+.playlist-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1%
+}

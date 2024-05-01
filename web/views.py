@@ -40,10 +40,10 @@ class PlaylistDetail(DetailView):
 
 class SongCreate(LoginRequiredMixin, CreateView):
     model = Song
-    template_name = 'form.html'
+    template_name = 'add_song.html'
+
     form_class = SongForm
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.instance.playlist = Playlist.objects.get(id=self.kwargs['pk'])
+        form.instance.user = self.request.user  # Assignem l'usuari actual a la llista de reproducció
         return super(SongCreate, self).form_valid(form)
