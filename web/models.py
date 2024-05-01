@@ -9,8 +9,8 @@ from django.urls import reverse
 class Song(models.Model):
     title = models.CharField(max_length=100)
     album = models.CharField(max_length=100)
-    duration = models.DurationField()
-    lyrics = models.TextField()
+    duration = models.DurationField(null=True)
+    lyrics = models.TextField(null=True)
     artists = models.ManyToManyField('Artist', related_name='artists_to_song')
     genre = models.ManyToManyField('Genre', related_name='genres_to_song')
 
@@ -24,8 +24,8 @@ class Song(models.Model):
 class Artist(models.Model):
     name = models.CharField(max_length=100)
     nationality = models.CharField(max_length=100)
-    monthly_listeners = models.IntegerField()
-    songs = models.ManyToManyField('Song', related_name='songs_to_artist')
+    monthly_listeners = models.IntegerField(null=True)
+    #songs = models.ManyToManyField('Song', related_name='songs_to_artist')
     genres = models.ManyToManyField('Genre', related_name='genres_to_artist')
 
     def __str__(self):
@@ -34,8 +34,8 @@ class Artist(models.Model):
 
 class Genre(models.Model):
     name = models.CharField(max_length=100)
-    songs = models.ManyToManyField('Song', related_name='songs_to_genre')
-    artists = models.ManyToManyField('Artist', related_name='artists_to_genre')
+    #songs = models.ManyToManyField('Song', related_name='songs_to_genre')
+    #artists = models.ManyToManyField('Artist', related_name='artists_to_genre')
 
     def __str__(self):
         return self.name

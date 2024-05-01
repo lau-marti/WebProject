@@ -1,56 +1,65 @@
-const SpotifyWebApi = require('spotify-web-api-node');
-
-// Configurar credenciales de cliente de Spotify
-const client_id = '7f44fa05891c4b0388022a3317aea4cb';
-const client_secret = 'd9e691dd766a45509a5f4f9b8ce026c6';
-
 // Inicializar el cliente de SpotifyWebApi
 const spotifyApi = new SpotifyWebApi({
-  clientId: client_id,
-  clientSecret: client_secret
+  clientId: '7f44fa05891c4b0388022a3317aea4cb',
+  clientSecret: 'd9e691dd766a45509a5f4f9b8ce026c6'
 });
 
-// Obtener un token de acceso utilizando Client Credentials Flow
-async function obtenerToken() {
-  try {
-    const data = await spotifyApi.clientCredentialsGrant();
-    spotifyApi.setAccessToken(data.body.access_token);
-  } catch (error) {
+// Función para obtener un token de acceso utilizando Client Credentials Flow
+function obtenerToken() {
+  return fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic ' + btoa('7f44fa05891c4b0388022a3317aea4cb:d9e691dd766a45509a5f4f9b8ce026c6')
+    },
+    body: 'grant_type=client_credentials'
+  })
+  .then(response => response.json())
+  .then(data => {
+    spotifyApi.setAccessToken(data.access_token);
+  })
+  .catch(error => {
     console.error("Error al obtener el token de acceso:", error);
-  }
+  });
 }
 
 // Función para buscar información de una canción
-async function buscarCancion() {
-
+function buscarCancion() {
   const nombreCancion = document.getElementById('searchInput').value;
-  await obtenerToken();
-  try {
-    const response = await spotifyApi.searchTracks('track:' + nombreCancion, { limit: 5 });
+  obtenerToken()
+    .then(() => {
+      spotifyApi.searchTracks('track:' + nombreCancion, { limit: 10 })
+        .then(response => {
+          if (response.body.tracks.items.length > 0) {
+            const searchResults = document.getElementById('searchResults');
+            searchResults.innerHTML = ''; // Limpiar resultados anteriores
 
-    if (response.body.tracks.items.length > 0) {
-      console.log("Se encontraron las siguientes canciones:");
-
-      for (let i = 0; i < response.body.tracks.items.length; i++) {
-        const cancion = response.body.tracks.items[i];
-        console.log(`Canción ${i + 1}:`);
-        console.log("Nombre:", cancion.name);
-        console.log("Artista(s):", cancion.artists.map(artist => artist.name).join(", "));
-        console.log("Álbum:", cancion.album.name);
-        console.log("URL del álbum:", cancion.album.external_urls.spotify);
-        console.log("URL de la imagen del álbum:", cancion.album.images[0].url);
-
-        // Obtener los géneros de los artistas asociados
-        const artistasIds = cancion.artists.map(artist => artist.id);
-        const artistasInfo = await Promise.all(artistasIds.map(artistId => spotifyApi.getArtist(artistId)));
-
-        console.log("Género(s):", artistasInfo.map(artistInfo => artistInfo.body.genres.join(", ")).join(", "));
-        console.log("--------------------");
-      }
-    } else {
-      console.log("No se encontraron canciones con ese nombre.");
-    }
-  } catch (error) {
-    console.error("Error al buscar la canción:", error);
-  }
+            console.log("Se encontraron las siguientes canciones:");
+            for (let i = 0; i < response.body.tracks.items.length; i++) {
+              const cancion = response.body.tracks.items[i];
+              const artistasIds = cancion.artists.map(artist => artist.id);
+              Promise.all(artistasIds.map(artistId => spotifyApi.getArtist(artistId)))
+                .then(artistasInfo => {
+                  const resultDiv = document.createElement('div');
+                  resultDiv.innerHTML = `
+                    <p>Canción ${i + 1}:</p>
+                    <p> Nombre: ${cancion.name}</p>
+                    <p> Artista(s): ${cancion.artists.map(artist => artist.name).join(", ")}</p>
+                    <p> Álbum: ${cancion.album.name}</p>
+                    <p> URL del álbum: <a href="${cancion.album.external_urls.spotify}" target="_blank">${cancion.album.external_urls.spotify}</a></p>
+                    <p> URL de la imagen del álbum: <img src="${cancion.album.images[0].url}" alt="Imagen del álbum"></p>
+                    <p> Género(s): ${artistasInfo.map(artistInfo => artistInfo.body.genres.join(", ")).join(", ")}</p>
+                    <hr>
+                  `;
+                  searchResults.appendChild(resultDiv);
+                });
+            }
+          } else {
+            console.log("No se encontraron canciones con ese nombre.");
+          }
+        })
+        .catch(error => {
+          console.error("Error al buscar la canción:", error);
+        });
+    });
 }
