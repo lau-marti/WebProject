@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Playlists{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Les meves playlist</h2>
+    <!-- Lista de playlists existentes -->
+    {% for playlist in playlists %}
+    <div class="playlist">
+        <h3>{{ playlist.name }}</h3>
+        <!-- Aquí puedes añadir más detalles sobre la playlist si lo deseas -->
+    </div>
+    {% endfor %}
+
+    <h2>Crea una nueva playlist</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Crear playlist</button>
+    </form>
+</div>
+{% endblock %}

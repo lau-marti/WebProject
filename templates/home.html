@@ -9,9 +9,10 @@
     <h2>Hi {{ user.username }}!</h2>
   <form action="{% url 'logout' %}" method="post"> <!-- Formulario para cerrar sesión -->
     {% csrf_token %}
-    <button class="button" type="submit">Log Out</button>
+    <button class="genericButton" type="submit">Log Out</button>
   </form>
 </div>
+<!--
 <h1>
     Playlists
     {% if user.is_authenticated %} (<a href="url 'web:playlist_create'%}">add</a>){% endif %}
@@ -22,27 +23,32 @@
             {{playlist.name}} </a></li>
     {%empty%}<li> Sorry, no playlist registred yet. </li>
     {% endfor %}
-
-
-
 </ul>
-
-<div class="button-container">
-    <p style="color: white;">Tria un servei: </p>
-  <div class="button-row">
-      <form action="{% url 'web:playlist_create' %}" method="get">
-        <button class="large-button" type="submit">Crea una playlist</button>
-      </form>
-    <button class="large-button"> Funció 2</button>
-  </div>
-  <div class="button-row">
-    <button class="large-button"> Funció 3</button>
-    <button class="large-button"> Funció 4</button>
-  </div>
+-->
+<div class="row">
+    <div class="column" style="background-color:#aaa;">
+        <form action="{% url 'web:playlist_create' %}" method="get">
+            <button class="genericButton large-button" type="submit">Crea una playlist</button>
+            <ul>
+                {% for playlist in latest_playlist_list %}
+                    <li><a href="{%url 'web:playlist_detail' playlist.id %}">
+                        {{playlist.name}} </a></li>
+                {%empty%}<li> Sorry, no playlist registred yet. </li>
+                {% endfor %}
+            </ul>
+        </form>
+    </div>
+    <div class="column" style="background-color:#bbb;">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Buscar (canció / artista / génere)...">
+            <button class="genericButton large-button">Buscar</button>
+        </div>
+        <button class="genericButton small-button"> Funció 2</button>
+        <button class="genericButton small-button"> Funció 3</button>
+        <button class="genericButton small-button"> Funció 4</button>
+    </div>
 </div>
 
-
-</form>
 {% else %}
 
 <div class="container-home">
@@ -52,13 +58,14 @@
 
         <form action="{% url 'login' %}" method="post"> <!-- We can add a form to log out here -->
             {% csrf_token %}
-            <button class="button" type="submit">Log In</button>
+            <button class="genericButton" type="submit">Log In</button>
         </form>
         <form action="{% url 'signup' %}" method="post"> <!-- We can add a form to log out here -->
             {% csrf_token %}
-            <button class="button" type="submit">Sign Up</button>
+            <button class="genericButton" type="submit">Sign Up</button>
         </form>
     </div>
 </div>
 {% endif %}
 {% endblock %}
+
