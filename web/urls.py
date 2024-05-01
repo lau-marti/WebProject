@@ -5,6 +5,7 @@ from web.forms import PlaylistForm
 from web.views import PlaylistCreate, PlaylistDetail, LoginRequiredCheckIsOwnerUpdateView, SongCreate, add_song
 from web.models import Song, Playlist
 
+
 app_name = "web"
 
 urlpatterns = [
@@ -46,4 +47,5 @@ urlpatterns = [
         name='song_create'),
 
     path('playlists/<int:pk>/songs/add_song', add_song, name='add_song'),
+
     ]

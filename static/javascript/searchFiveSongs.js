@@ -1,4 +1,4 @@
-   let accessToken; // Variable global para almacenar el token de acceso
+let accessToken; // Variable global para almacenar el token de acceso
 
     // Función para obtener el token de acceso de la API de Spotify
     function obtenerToken(callback) {
@@ -85,7 +85,7 @@
                 <p>Artista(s): ${item.artists.map((artist, artistIndex) => artist.name + " (" + artistasInfo[index * item.artists.length + artistIndex].genres.join(", ") + ")").join(", ")}</p>
                 <p>Álbum: ${item.album.name}</p>
                 <p>URL del álbum: <a href="${item.album.external_urls.spotify}" target="_blank">${item.album.external_urls.spotify}</a></p>
-                <p>URL de la imagen del álbum: <img src="${item.album.images[0].url}" alt="Album Image"></p>
+                <p>URL de la imagen del álbum: <img src="${item.album.images[0].url}" alt="Album Image" style="max-width: 200px; max-height: 200px;"></p>
                 <p>Duración: ${duracion}</p>
                 <button onclick="agregarCancion('${item.name}', '${item.artists[0].name}', '${item.album.name}')">Add</button>
                 <hr>

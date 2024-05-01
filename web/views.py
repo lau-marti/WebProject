@@ -73,3 +73,4 @@ def add_song(request, pk):
     else:
         # Si la solicitud no es POST, devolver un error
         return JsonResponse({'error': 'Método no permitido'}, status=405)
+
