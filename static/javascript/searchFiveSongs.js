@@ -69,6 +69,51 @@ let accessToken; // Variable global para almacenar el token de acceso
             });
     }
 
+    // Función para agregar una canción a la base de datos
+    function agregarCancion(nombreCancion, nombreArtista, nombreAlbum) {
+        // Crear un objeto FormData y agregar los datos
+        const formData = new FormData();
+        formData.append('nombre_cancion', nombreCancion);
+        formData.append('nombre_artista', nombreArtista);
+        formData.append('nombre_album', nombreAlbum);
+
+        // Obtener el token CSRF de la cookie
+        const csrftoken = getCookie('csrftoken');
+
+        // Enviar la solicitud AJAX con fetch
+        fetch('add_song', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al agregar la canción');
+            }
+            console.log('Canción agregada correctamente');
+            return response.json();
+        })
+        .catch(error => console.error('ERROR:', error));
+    }
+
+    // Función para obtener el valor de una cookie por su nombre
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
     // Función para mostrar los resultados de la búsqueda
     function displayResults(items, artistasInfo) {
         const searchResults = $('#searchResults');
@@ -80,15 +125,17 @@ let accessToken; // Variable global para almacenar el token de acceso
             const duracion = formatDuracion(item.duration_ms); // Obtener la duración formateada
 
             resultDiv.html(`
-                <p>Canción ${index + 1}:</p>
-                <p>Nombre: ${item.name}</p>
-                <p>Artista(s): ${item.artists.map((artist, artistIndex) => artist.name + " (" + artistasInfo[index * item.artists.length + artistIndex].genres.join(", ") + ")").join(", ")}</p>
-                <p>Álbum: ${item.album.name}</p>
-                <p>URL del álbum: <a href="${item.album.external_urls.spotify}" target="_blank">${item.album.external_urls.spotify}</a></p>
-                <p>URL de la imagen del álbum: <img src="${item.album.images[0].url}" alt="Album Image" style="max-width: 200px; max-height: 200px;"></p>
-                <p>Duración: ${duracion}</p>
-                <button onclick="agregarCancion('${item.name}', '${item.artists[0].name}', '${item.album.name}')">Add</button>
-                <hr>
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <h1>Canción ${index + 1}:</h1>
+                    <h2 style="color: white">Titulo: ${item.name}</h2>
+                    <p>Artista(s): ${item.artists.map((artist, artistIndex) => artist.name + " (" + artistasInfo[index * item.artists.length + artistIndex].genres.join(", ") + ")").join(", ")}</p>
+                    <p>Álbum: ${item.album.name}</p>
+                    <p>URL del álbum: <a href="${item.album.external_urls.spotify}" target="_blank">${item.album.external_urls.spotify}</a></p>
+                    <img src="${item.album.images[0].url}" alt="Album Image" style="max-width: 200px; max-height: 200px;"></p>
+                    <p>Duración: ${duracion}</p>
+                    <button class="genericButton" onclick="agregarCancion('${item.name}', '${item.artists[0].name}', '${item.album.name}')">Add</button>
+                    <hr style="border-top: 1px solid white;">  <!-- Línea blanca de separación -->
+                </div>
             `);
             searchResults.append(resultDiv);
         });
