@@ -6,7 +6,9 @@
 <div class="container">
     <div class="playlist-header">
         <h1 class="PlaylistName">{{ playlist.name }}</h1>
-        <button class="genericButton">Afegir Cançó</button>
+        <a href="{% url 'web:song_create' playlist.pk %}">
+            <button class="genericButton">Afegir Cançó</button>
+        </a>
     </div>
     <ul class="cançons">
     {% for song in playlist.songs.all %}

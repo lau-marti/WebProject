@@ -6,7 +6,7 @@ from .models import Playlist, Song
 class PlaylistForm(ModelForm):
     class Meta:
         model = Playlist
-        exclude = ('user','songs',)
+        exclude = ('user','songs', 'date')
 
 
 class SongForm(ModelForm):
