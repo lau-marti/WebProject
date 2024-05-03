@@ -13,7 +13,11 @@
     <ul class="cançons">
     {% for song in playlist.songs.all %}
         <li style="display: flex; justify-content: space-between; align-items: center;">
-            <span class="Paragraf1">{{ song.title }} - {{ song.artist }}</span>
+            <span class="Paragraf1">{{ song.title }} -
+            {% for artist in song.artists.all %}
+                {{ artist.name }}
+            {% endfor %}
+            </span>
             <form action="{% url 'web:delete_song' song.id playlist.id %}" method="POST" class="inline">
                 {% csrf_token %}
                 <button type="submit" class="deleteButton">Eliminar</button>

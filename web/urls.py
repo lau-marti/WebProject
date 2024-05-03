@@ -10,7 +10,7 @@ app_name = "web"
 urlpatterns = [
     path('',
          ListView.as_view(
-             queryset=Playlist.objects.filter(date__lte=timezone.now()).order_by('-date'),
+             queryset=Playlist.objects.filter(date__lte=timezone.now()).order_by('name'),
              context_object_name='latest_playlist_list',
              template_name='home.html'),
          name='playlist_list'),
