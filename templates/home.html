@@ -12,31 +12,31 @@
     <button class="genericButton" type="submit">Log Out</button>
   </form>
 </div>
-<!--
-<h1>
-    Playlists
-    {% if user.is_authenticated %} (<a href="url 'web:playlist_create'%}">add</a>){% endif %}
-</h1>
-<ul>
-    {% for playlist in latest_playlist_list %}
-        <li><a href="{%url 'web:playlist_detail' playlist.id %}">
-            {{playlist.name}} </a></li>
-    {%empty%}<li> Sorry, no playlist registred yet. </li>
-    {% endfor %}
-</ul>
--->
+
+
 <div class="row">
     <div class="column" style="background-color:#aaa;">
         <form action="{% url 'web:playlist_create' %}" method="get">
+            <input class = search-input type="text" id="searchPlaylist" placeholder="Search playlists"
+               onkeydown="if (event.keyCode == 13) buscarCancion()">
+            <button class = genericButton onclick="buscarCancion()">Search</button>
+            <p>Tus playlists</p>
             <button class="genericButton large-button" type="submit">Crea una playlist</button>
-            <ul>
-                {% for playlist in latest_playlist_list %}
-                    <li><a href="{%url 'web:playlist_detail' playlist.id %}">
-                        {{playlist.name}} </a></li>
-                {%empty%}<li> Sorry, no playlist registred yet. </li>
-                {% endfor %}
-            </ul>
         </form>
+
+        <ul>
+            {% for playlist in latest_playlist_list %}
+            <li>
+                <form action="{% url 'web:playlist_detail' playlist.id %}">
+                    <button class="playlistButton">
+                        {{playlist.name}}
+                    </button>
+                </form>
+            </li>
+            {%empty%}<li> Sorry, no playlist registred yet. </li>
+            {% endfor %}
+        </ul>
+        <p>Others Playlists</p>
     </div>
     <div class="column" style="background-color:#bbb;">
         <input class = search-input type="text" id="searchInput" placeholder="Search for songs, artists, etc."
