@@ -30,7 +30,7 @@
         <form action="{% url 'web:playlist_create' %}" method="get">
             <button class="genericButton large-button" type="submit">Crea una playlist</button>
             <ul>
-                {% for playlist in latest_playlist_list %}
+                {% for playlist in latest_playlist_list %} <!-- No es Latest Playlist-->
                     <li><a href="{%url 'web:playlist_detail' playlist.id %}">
                         {{playlist.name}} </a></li>
                 {%empty%}<li> Sorry, no playlist registred yet. </li>
