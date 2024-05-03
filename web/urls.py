@@ -47,6 +47,6 @@ urlpatterns = [
 
     path('playlists/<int:pk>/songs/add_song', add_song, name='add_song'),
 
-    path('song/<int:song_id>/delete/', delete_song, name='delete_song'),
+    path('song/<int:song_id>/delete/<int:playlist_id>/', delete_song, name='delete_song'),
 
 ]

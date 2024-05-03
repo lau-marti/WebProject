@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika:wght@300..700&display=swap');
+
 body {
     background-color: #212121;
     font-family: "URW Gothic";
@@ -15,7 +17,6 @@ body {
     border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
-    font-family: "URW Gothic";
     transition: background-color 0.3s ease;
     cursor: pointer;
     margin: 10px;
@@ -124,6 +125,9 @@ h1 {
     color: #1db954;
     text-align: center; /* Centra el texto dentro del h1 */
     margin: 0; /* Elimina cualquier margen predeterminado que pueda tener el h1 */
+}
+.h1:hover {
+    background-color: #16a085;
 }
 
 .Paragraf1 {

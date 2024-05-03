@@ -14,7 +14,7 @@
     {% for song in playlist.songs.all %}
         <li style="display: flex; justify-content: space-between; align-items: center;">
             <span class="Paragraf1">{{ song.title }} - {{ song.artist }}</span>
-            <form action="{% url 'web:delete_song' song.id %}" method="POST" class="inline">
+            <form action="{% url 'web:delete_song' song.id playlist.id %}" method="POST" class="inline">
                 {% csrf_token %}
                 <button type="submit" class="deleteButton">Eliminar</button>
             </form>

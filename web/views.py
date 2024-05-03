@@ -74,10 +74,11 @@ def add_song(request, pk):
         # Si la solicitud no es POST, devolver un error
         return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-def delete_song(request, song_id):
+def delete_song(request, song_id, playlist_id):
     if request.method == 'POST':
+        playlist = get_object_or_404(Playlist, pk=playlist_id)
         song = get_object_or_404(Song, id=song_id)
-        song.delete()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        playlist.songs.remove(song)
+        return redirect(playlist.get_absolute_url())
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)
