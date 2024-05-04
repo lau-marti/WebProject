@@ -56,17 +56,51 @@ class PlaylistDetail(DetailView):
         context = super(PlaylistDetail, self).get_context_data(**kwargs)
         return context
 
-class SongCreate(LoginRequiredMixin, CreateView):
+class SongCreate(CreateView):
     model = Song
-    template_name = 'add_song.html'
+    fields = ['title', 'album', 'artists']
+    template_name = 'add_song.html'  # Plantilla para el formulario de creación
+    success_url = 'playlist_list' # Redirige después de agregar la canción a la playlist
 
-    form_class = SongForm
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            # Obtener los datos de la solicitud POST
+            nombre_cancion = request.POST.get('nombre_cancion')
+            nombre_artista = request.POST.get('nombre_artista')
+            nombre_album = request.POST.get('nombre_album')
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user  # Assignem l'usuari actual a la llista de reproducció
-        return super(SongCreate, self).form_valid(form)
+            # Obtener o crear el artista
+            artista, _ = Artist.objects.get_or_create(name=nombre_artista)
+
+            # Crear la canción y asociar el artista
+            cancion = Song.objects.create(title=nombre_cancion, album=nombre_album)
+            cancion.artists.add(artista)
+
+            # Obtener la playlist y agregar la canción
+            playlist_pk = self.kwargs['pk']
+            playlist = Playlist.objects.get(pk=playlist_pk)
+            playlist.songs.add(cancion)
+
+            # Devolver una respuesta JSON
+            return JsonResponse({'mensaje': 'Canción agregada a la playlist correctamente'})
+        else:
+            return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 
+class SongDelete(DeleteView):
+    model = Song
+    def post(self, request, *args, **kwargs):
+        # Obtener la instancia de la lista de reproducción
+        playlist = get_object_or_404(Playlist, pk=self.kwargs['pk'])
+        # Obtener la instancia de la canción que se desea eliminar
+        song = get_object_or_404(Song, pk=self.kwargs['pkr'])
+        # Eliminar la canción de la lista de reproducción
+        playlist.songs.remove(song)
+        # Guardar los cambios
+        playlist.save()
+        song.delete()
+        # Redirigir a la página de detalles de la lista de reproducción
+        return redirect('web:playlist_detail', pk=playlist.id)
 def add_song(request, pk):
     if request.method == 'POST':
         # Obtener los datos de la solicitud POST
@@ -84,6 +118,7 @@ def add_song(request, pk):
         # Agregar la canción a la playlist
         playlist = Playlist.objects.get(pk=pk)
         playlist.songs.add(cancion)
+        playlist_detail_url = reverse('playlist_detail', args=[pk])
 
         # Devolver una respuesta JSON
         return JsonResponse({'mensaje': 'Canción agregada a la playlist correctamente'})

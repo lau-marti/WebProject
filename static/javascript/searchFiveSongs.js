@@ -1,4 +1,4 @@
-let accessToken; // Variable global para almacenar el token de acceso
+    let accessToken; // Variable global para almacenar el token de acceso
 
     // Función para obtener el token de acceso de la API de Spotify
     function obtenerToken(callback) {
@@ -69,8 +69,35 @@ let accessToken; // Variable global para almacenar el token de acceso
             });
     }
 
+    // Función para mostrar los resultados de la búsqueda
+    function displayResults(items, artistasInfo) {
+        const searchResults = $('#searchResults');
+        searchResults.empty(); // Limpiar resultados anteriores
+
+        // Recorrer las pistas y mostrar la información
+        items.forEach(function(item, index) {
+            const resultDiv = $('<div>');
+            resultDiv.html(`
+                <p>Canción ${index + 1}:</p>
+                <p>Nombre: ${item.name}</p>
+                <p>Artista(s): ${item.artists.map((artist, artistIndex) => artist.name + " (" + artistasInfo[index * item.artists.length + artistIndex].genres.join(", ") + ")").join(", ")}</p>
+                <p>Álbum: ${item.album.name}</p>
+                <p>URL del álbum: <a href="${item.album.external_urls.spotify}" target="_blank">${item.album.external_urls.spotify}</a></p>
+                <p>URL de la imagen del álbum: <img src="${item.album.images[0].url}" alt="Imagen del álbum"></p>
+                <button onclick="agregarCancion('${item.name}', '${item.artists[0].name}', '${item.album.name}')">Add</button>
+                <hr>
+            `);
+            searchResults.append(resultDiv);
+        });
+    }
+
     // Función para agregar una canción a la base de datos
     function agregarCancion(nombreCancion, nombreArtista, nombreAlbum) {
+        // Obtener el playlist.id del campo oculto
+
+        const urlcomponents = window.location.pathname.split('/')
+        const playlistId = urlcomponents[3]
+
         // Crear un objeto FormData y agregar los datos
         const formData = new FormData();
         formData.append('nombre_cancion', nombreCancion);
@@ -81,7 +108,7 @@ let accessToken; // Variable global para almacenar el token de acceso
         const csrftoken = getCookie('csrftoken');
 
         // Enviar la solicitud AJAX con fetch
-        fetch('add_song', {
+        fetch('create', {
             method: 'POST',
             headers: {
                 'X-CSRFToken': csrftoken
@@ -93,7 +120,9 @@ let accessToken; // Variable global para almacenar el token de acceso
                 throw new Error('Error al agregar la canción');
             }
             console.log('Canción agregada correctamente');
+            window.location.href = `/musicterritory/playlists/${playlistId}`;
             return response.json();
+
         })
         .catch(error => console.error('ERROR:', error));
     }
@@ -112,39 +141,4 @@ let accessToken; // Variable global para almacenar el token de acceso
             }
         }
         return cookieValue;
-    }
-
-    // Función para mostrar los resultados de la búsqueda
-    function displayResults(items, artistasInfo) {
-        const searchResults = $('#searchResults');
-        searchResults.empty(); // Limpiar resultados anteriores
-
-        // Recorrer las pistas y mostrar la información
-        items.forEach(function(item, index) {
-            const resultDiv = $('<div>');
-            const duracion = formatDuracion(item.duration_ms); // Obtener la duración formateada
-
-            resultDiv.html(`
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                    <h1>Canción ${index + 1}:</h1>
-                    <h2 style="color: white">Titulo: ${item.name}</h2>
-                    <p>Artista(s): ${item.artists.map((artist, artistIndex) => artist.name + " (" + artistasInfo[index * item.artists.length + artistIndex].genres.join(", ") + ")").join(", ")}</p>
-                    <p>Álbum: ${item.album.name}</p>
-                    <p>URL del álbum: <a href="${item.album.external_urls.spotify}" target="_blank">${item.album.external_urls.spotify}</a></p>
-                    <img src="${item.album.images[0].url}" alt="Album Image" style="max-width: 200px; max-height: 200px;"></p>
-                    <p>Duración: ${duracion}</p>
-                    <button class="genericButton" onclick="agregarCancion('${item.name}', '${item.artists[0].name}', '${item.album.name}')">Add</button>
-                    <hr style="border-top: 1px solid white;">  <!-- Línea blanca de separación -->
-                </div>
-            `);
-            searchResults.append(resultDiv);
-        });
-    }
-
-    // Función para formatear la duración de milisegundos a formato de minutos y segundos
-    function formatDuracion(duracion_ms) {
-        const duracionSegundos = Math.floor(duracion_ms / 1000);
-        const minutos = Math.floor(duracionSegundos / 60);
-        const segundos = duracionSegundos % 60;
-        return `${minutos}:${segundos < 10 ? '0' : ''}${segundos}`;
     }
