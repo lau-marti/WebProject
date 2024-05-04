@@ -3,7 +3,7 @@ from django.http import JsonResponse,HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import DetailView
+from django.views.generic import DetailView,  ListView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from .forms import PlaylistForm, SongForm
 from .models import Playlist, Song, Artist
@@ -23,6 +23,23 @@ class CheckIsOwnerMixin(object):
 
 class LoginRequiredCheckIsOwnerUpdateView(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
     template_name ='form.html'
+
+class PlaylistList(ListView):
+    model = Playlist
+    template_name = 'home.html'
+    context_object_name = 'all_playlists'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['user_playlists'] = self.request.user.playlist_set.all()
+        return context
+
+class DeletePlaylist(DeleteView):
+    model = Playlist
+    template_name = 'playlist_confirm_delete.html'  # Plantilla para confirmar la eliminación
+    success_url = reverse_lazy('web:playlist_list')  # URL a la que se redireccionará después de la eliminación
+
 class PlaylistCreate(LoginRequiredMixin, CreateView):
     model = Playlist
     template_name = 'form.html'

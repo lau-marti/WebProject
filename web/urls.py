@@ -2,18 +2,20 @@ from django.urls import path
 from django.utils import timezone
 from django.views.generic import DetailView, ListView
 from web.forms import PlaylistForm
-from web.views import PlaylistCreate, PlaylistDetail, LoginRequiredCheckIsOwnerUpdateView, SongCreate, add_song, delete_song
+from web.views import PlaylistCreate, PlaylistDetail, LoginRequiredCheckIsOwnerUpdateView, SongCreate, add_song, delete_song, PlaylistList, DeletePlaylist
 from web.models import Song, Playlist
 
 app_name = "web"
 
 urlpatterns = [
     path('',
-         ListView.as_view(
-             queryset=Playlist.objects.filter(date__lte=timezone.now()).order_by('name'),
-             context_object_name='latest_playlist_list',
-             template_name='home.html'),
+         PlaylistList.as_view(),
          name='playlist_list'),
+
+    path('playlists/<int:pk>/delete',
+         DeletePlaylist.as_view(),
+         name='playlist_delete'),
+
 
 
     #Playlist details, ex.: /playlists/1/
