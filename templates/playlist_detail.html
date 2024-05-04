@@ -6,7 +6,7 @@
 <div class="container">
     <div class="playlist-header">
         <h1 class="PlaylistName">{{ playlist.name }}</h1>
-        <a href="{% url 'web:song_create' playlist.pk %}">
+        <a href="{% url 'web:song_create' playlist.id %}">
             <button class="genericButton">Afegir Cançó</button>
         </a>
     </div>
@@ -18,7 +18,7 @@
                 {{ artist.name }}
             {% endfor %}
             </span>
-            <form action="{% url 'web:delete_song' song.id playlist.id %}" method="POST" class="inline">
+            <form action="{% url 'web:song_delete' playlist.id song.id %}" method="POST" class="inline">
                 {% csrf_token %}
                 <button type="submit" class="deleteButton">Eliminar</button>
             </form>
