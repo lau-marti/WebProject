@@ -12,7 +12,34 @@
     <button class="genericButton" type="submit">Log Out</button>
   </form>
 </div>
-
+<h1>
+    My Playlists
+    {% if user.is_authenticated %}(<a href="{% url 'web:playlist_create' %}">add</a>){% endif %}
+    </h1>
+    <ul>
+    {% if user.is_authenticated %}
+        {% for playlist in user_playlists %}
+            <li><a href="{% url 'web:playlist_detail' playlist.id %}">{{ playlist.name }}</a></li>
+            {% if playlist.user == user %}
+                (<a href="{% url 'web:playlist_delete' playlist.id %}">delete</a>)
+            {% endif %}
+        {% empty %}
+            <li>Sorry, you don't have any playlists yet.</li>
+        {% endfor %}
+    {% else %}
+        <li>Sorry, you have to log in.</li>
+    {% endif %}
+    </ul>
+<h1>
+    All Playlists
+</h1>
+<ul>
+    {% for playlist in all_playlists %}
+        <li><a href="{% url 'web:playlist_detail' playlist.id %}">
+            {{ playlist.name }}</a></li>
+    {% empty %}<li>Sorry, no playlists registered yet.</li>
+    {% endfor %}
+</ul>
 
 <div class="row">
     <div class="column" style="background-color:#aaa;">

@@ -18,7 +18,7 @@ class Song(models.Model):
         return u"%s" % self.title
 
     def get_absolute_url(self):
-        return reverse('web:song_detail', kwargs={'pkr': self.song.pk, 'pk': self.pk})
+        return reverse('web:song_detail.html', kwargs={'pkr': self.song.pk, 'pk': self.pk})
 
 
 class Artist(models.Model):
@@ -33,7 +33,7 @@ class Artist(models.Model):
 
 
 class Genre(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, primary_key=True)
     #songs = models.ManyToManyField('Song', related_name='songs_to_genre')
     #artists = models.ManyToManyField('Artist', related_name='artists_to_genre')
 
@@ -44,6 +44,8 @@ class Playlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE) # Si es borra l'usuari, també les seves playlist
     name = models.CharField(max_length=100)
     date = models.DateField(default=date.today)
+    description = models.TextField(null=True)
+    genres = models.ManyToManyField(Genre, related_name='genres_to_playlist')
     songs = models.ManyToManyField(Song, related_name='songs_to_playlist')
 
     def __unicode__(self):
