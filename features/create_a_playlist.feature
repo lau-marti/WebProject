@@ -13,7 +13,7 @@ Feature: Create A Playlist
       | Rock List   |
     Then I'm viewing the details page for playlist by "user"
       | name        |
-      | The Tavern  |
+      | Rock List   |
     And There are 1 restaurants
 
   Scenario: Register just restaurant name and city

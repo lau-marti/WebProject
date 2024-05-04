@@ -7,69 +7,59 @@
 <div class="separator"></div>
 <div class="top-container">
     <h2>Hi {{ user.username }}!</h2>
-  <form action="{% url 'logout' %}" method="post"> <!-- Formulario para cerrar sesión -->
+  <form action="{% url 'logout' %}" method="post">  <!--Formulario para cerrar sesión-->
     {% csrf_token %}
     <button class="genericButton" type="submit">Log Out</button>
   </form>
 </div>
-<h1>
-    My Playlists
-    {% if user.is_authenticated %}(<a href="{% url 'web:playlist_create' %}">add</a>){% endif %}
-    </h1>
-    <ul>
-    {% if user.is_authenticated %}
-        {% for playlist in user_playlists %}
-            <li><a href="{% url 'web:playlist_detail' playlist.id %}">{{ playlist.name }}</a></li>
-            {% if playlist.user == user %}
-                (<a href="{% url 'web:playlist_delete' playlist.id %}">delete</a>)
-            {% endif %}
-        {% empty %}
-            <li>Sorry, you don't have any playlists yet.</li>
-        {% endfor %}
-    {% else %}
-        <li>Sorry, you have to log in.</li>
-    {% endif %}
-    </ul>
-<h1>
-    All Playlists
-</h1>
-<ul>
-    {% for playlist in all_playlists %}
-        <li><a href="{% url 'web:playlist_detail' playlist.id %}">
-            {{ playlist.name }}</a></li>
-    {% empty %}<li>Sorry, no playlists registered yet.</li>
-    {% endfor %}
-</ul>
 
 <div class="row">
     <div class="column" style="background-color:#aaa;">
         <form action="{% url 'web:playlist_create' %}" method="get">
-            <input class = search-input type="text" id="searchPlaylist" placeholder="Search playlists"
+            <input class="search-input" type="text" id="searchPlaylist" placeholder="Search playlists"
                onkeydown="if (event.keyCode == 13) buscarCancion()">
-            <button class = genericButton onclick="buscarCancion()">Search</button>
-            <p>Tus playlists</p>
-            <button class="genericButton large-button" type="submit">Crea una playlist</button>
+            <button class="genericButton" onclick="buscarCancion()">Search</button>
+            <div style="display: flex; justify-content: center; align-items: center">
+                <h1>My Playlists</h1>
+                {% if user.is_authenticated %}
+                    <button class="genericButton large-button" type="submit">Crea una playlist</button>
+                {% endif %}
+            </div>
         </form>
-
         <ul>
-            {% for playlist in latest_playlist_list %}
-            <li>
-                <form action="{% url 'web:playlist_detail' playlist.id %}">
-                    <button class="playlistButton">
-                        {{playlist.name}}
-                    </button>
-                </form>
-            </li>
-            {%empty%}<li> Sorry, no playlist registred yet. </li>
+            {% if user.is_authenticated %}
+                {% for playlist in user_playlists %}
+                    <li>
+                        <div style="display: flex; justify-content: space-between;align-items: center">
+                            <a class="playlistButton" href="{% url 'web:playlist_detail' playlist.id %}">{{ playlist.name }}</a>
+                            {% if playlist.user == user %}
+                            <a class="deleteButton" href="{% url 'web:playlist_delete' playlist.id %}">Eliminar</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% empty %}
+                    <li>Sorry, you don't have any playlists yet.</li>
+                {% endfor %}
+            {% else %}
+                <li>Sorry, you have to log in.</li>
+            {% endif %}
+        </ul>
+        <h1>All Playlists</h1>
+        <ul>
+            {% for playlist in all_playlists %}
+                <li><a class="playlistButton" href="{% url 'web:playlist_detail' playlist.id %}">{{ playlist.name }}</a></li>
+            {% empty %}
+                <li>Sorry, no playlists registered yet.</li>
             {% endfor %}
         </ul>
-        <p>Others Playlists</p>
     </div>
     <div class="column" style="background-color:#bbb;">
-        <input class = search-input type="text" id="searchInput" placeholder="Search for songs, artists, etc."
+        <form>
+            <input class="search-input" type="text" id="searchInput" placeholder="Search for songs, artists, etc."
                onkeydown="if (event.keyCode == 13) buscarCancion()">
-        <button class = genericButton onclick="buscarCancion()">Search</button>
-         <div id="searchResults"></div>
+            <button class="genericButton" onclick="buscarCancion()">Search</button>
+        </form>
+        <div id="searchResults"></div>
 
         {% block scripts %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -77,6 +67,7 @@
         {% endblock %}
     </div>
 </div>
+
 
 {% else %}
 

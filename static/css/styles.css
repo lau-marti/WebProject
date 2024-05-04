@@ -40,6 +40,11 @@ body {
     margin: 5px;
 }
 
+.playlistButton:hover {
+    background-color: #026e59;
+}
+
+
 
   /* Estilos generales para el formulario */
 .login-form {
@@ -134,9 +139,11 @@ body {
 }
 
 h1 {
-    color: #1db954;
+    color: #424949;
     text-align: center; /* Centra el texto dentro del h1 */
     margin: 0; /* Elimina cualquier margen predeterminado que pueda tener el h1 */
+    font-size: 25px;
+
 }
 .h1:hover {
     background-color: #16a085;
