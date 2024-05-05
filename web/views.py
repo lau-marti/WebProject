@@ -134,3 +134,10 @@ def delete_song(request, song_id, playlist_id):
         return redirect(playlist.get_absolute_url())
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+
+def search_playlists(request):
+    query = request.GET.get('searchValue', '')
+    playlists = Playlist.objects.filter(name__icontains=query)
+    results = [{'id': playlist.id, 'name': playlist.name, 'user': playlist.user.username} for playlist in playlists]
+    return JsonResponse({'playlists': results}, safe=False)

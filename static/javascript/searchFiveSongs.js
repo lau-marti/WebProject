@@ -77,14 +77,20 @@
         // Recorrer las pistas y mostrar la información
         items.forEach(function(item, index) {
             const resultDiv = $('<div>');
+            resultDiv.css({
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center'
+            });
             resultDiv.html(`
-                <p>Canción ${index + 1}:</p>
+                <h1>Canción ${index + 1}:</h1>
                 <p>Nombre: ${item.name}</p>
                 <p>Artista(s): ${item.artists.map((artist, artistIndex) => artist.name + " (" + artistasInfo[index * item.artists.length + artistIndex].genres.join(", ") + ")").join(", ")}</p>
                 <p>Álbum: ${item.album.name}</p>
                 <p>URL del álbum: <a href="${item.album.external_urls.spotify}" target="_blank">${item.album.external_urls.spotify}</a></p>
-                <p>URL de la imagen del álbum: <img src="${item.album.images[0].url}" alt="Imagen del álbum"></p>
-                <button onclick="agregarCancion('${item.name}', '${item.artists[0].name}', '${item.album.name}')">Add</button>
+                <img src="${item.album.images[0].url}" alt="Imagen del álbum"></p>
+                <button class="genericButton" onclick="agregarCancion('${item.name}', '${item.artists[0].name}', '${item.album.name}')">Add</button>
                 <hr>
             `);
             searchResults.append(resultDiv);
