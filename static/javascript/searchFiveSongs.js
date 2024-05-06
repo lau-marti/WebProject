@@ -84,25 +84,36 @@
                 <p>Álbum: ${item.album.name}</p>
                 <p>URL del álbum: <a href="${item.album.external_urls.spotify}" target="_blank">${item.album.external_urls.spotify}</a></p>
                 <p>URL de la imagen del álbum: <img src="${item.album.images[0].url}" alt="Imagen del álbum"></p>
-                <button onclick="agregarCancion('${item.name}', '${item.artists[0].name}', '${item.album.name}')">Add</button>
+                <p>Duración: ${msToTime(item.duration_ms)}</p>
+                <button onclick="agregarCancion('${item.name}', '${item.artists[0].name}', '${item.album.name}', '${item.album.images[0].url}', '${msToTime(item.duration_ms)}')">Add</button>
                 <hr>
             `);
             searchResults.append(resultDiv);
         });
     }
 
-    // Función para agregar una canción a la base de datos
-    function agregarCancion(nombreCancion, nombreArtista, nombreAlbum) {
-        // Obtener el playlist.id del campo oculto
+    // Función auxiliar para convertir milisegundos a formato de tiempo
+    function msToTime(duration) {
+        let seconds = Math.floor((duration / 1000) % 60);
+        let minutes = Math.floor((duration / (1000 * 60)) % 60);
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+        return minutes + ":" + seconds;
+    }
 
+    // Función para agregar una canción a la base de datos
+    function agregarCancion(nombreCancion, nombreArtista, nombreAlbum, urlImagen, duracion, urlCancion) {
+        // Obtener el playlist.id del campo oculto
         const urlcomponents = window.location.pathname.split('/')
         const playlistId = urlcomponents[3]
 
         // Crear un objeto FormData y agregar los datos
-        const formData = new FormData();
+        const formData = new FormData();      // Ha modificar per afegir la resta de la info
         formData.append('nombre_cancion', nombreCancion);
         formData.append('nombre_artista', nombreArtista);
         formData.append('nombre_album', nombreAlbum);
+        formData.append('url_imagen', urlImagen);
+        formData.append('duracion', duracion);
+        fromData.append('url_cancion', urlCancion)
 
         // Obtener el token CSRF de la cookie
         const csrftoken = getCookie('csrftoken');
@@ -122,7 +133,6 @@
             console.log('Canción agregada correctamente');
             window.location.href = `/musicterritory/playlists/${playlistId}`;
             return response.json();
-
         })
         .catch(error => console.error('ERROR:', error));
     }

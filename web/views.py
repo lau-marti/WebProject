@@ -1,13 +1,14 @@
 from django.core.exceptions import PermissionDenied
-from django.http import JsonResponse,HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView,  ListView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from .forms import PlaylistForm, SongForm
 from .models import Playlist, Song, Artist
 from django.contrib.auth.decorators import login_required
+from datetime import timedelta
 
 class LoginRequiredMixin(object):
     @method_decorator(login_required())
@@ -60,7 +61,6 @@ class SongCreate(CreateView):
     model = Song
     fields = ['title', 'album', 'artists']
     template_name = 'add_song.html'  # Plantilla para el formulario de creación
-    success_url = 'playlist_list' # Redirige después de agregar la canción a la playlist
 
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
@@ -68,12 +68,24 @@ class SongCreate(CreateView):
             nombre_cancion = request.POST.get('nombre_cancion')
             nombre_artista = request.POST.get('nombre_artista')
             nombre_album = request.POST.get('nombre_album')
+            url_imagen = request.POST.get('url_imagen')
+            duracion_str = request.POST.get('duracion')  # Obtener la duración como cadena
+            url_cancion = request.POST.get('url_cancion')
+
+
+            # Convertir la duración a timedelta
+            if duracion_str:
+                minutos, segundos = map(int, duracion_str.split(':'))
+                duracion_total_segundos = minutos * 60 + segundos
+                duracion_timedelta = timedelta(seconds=duracion_total_segundos)
+            else:
+                duracion_timedelta = None
 
             # Obtener o crear el artista
             artista, _ = Artist.objects.get_or_create(name=nombre_artista)
 
             # Crear la canción y asociar el artista
-            cancion = Song.objects.create(title=nombre_cancion, album=nombre_album)
+            cancion = Song.objects.create(title=nombre_cancion, album=nombre_album, duration=duracion_timedelta, url_imagen=url_imagen, url_cancion = url_cancion)
             cancion.artists.add(artista)
 
             # Obtener la playlist y agregar la canción
