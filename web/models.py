@@ -13,12 +13,15 @@ class Song(models.Model):
     lyrics = models.TextField(null=True)
     artists = models.ManyToManyField('Artist', related_name='artists_to_song')
     genre = models.ManyToManyField('Genre', related_name='genres_to_song')
+    url_imagen = models.URLField(null=True)  # Campo para la URL de la imagen
+    url_cancion = models.URLField(null=True) # Campo para la URL de la cancion en Spotify
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('web:song_detail.html', kwargs={'pkr': self.song.pk, 'pk': self.pk})
+
 
 
 class Artist(models.Model):

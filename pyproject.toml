@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "webproject"
+name = "project"
 version = "0.1.0"
 description = ""
 authors = ["joelblanc <joelblanciniesta@gmail.com>"]
@@ -9,6 +9,10 @@ readme = "README.md"
 python = "^3.12"
 django="^5.0.2"
 spotipy = "^2.23.0"
+behave = "==1.2.*"
+splinter = "==0.*"
+behave-django = "==1.4.*"
+
 
 
 [build-system]
