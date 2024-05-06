@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <h1 style="color: white">Confirm Deletion</h1>
-<p>Are you sure you want to delete the playlist "{{ playlist.name }}"?</p>
-<form method="post">
-  {% csrf_token %}
-  <button class="deleteButton" type="submit">Yes, delete</button>
-  <a style="color: white" href="{% url 'web:playlist_list' %}">Cancel</a>
-</form>
+<div class="container" style="display: flex; justify-content: center; align-items: center; flex-direction: column">
+    <p>Are you sure you want to delete the playlist "{{ playlist.name }}"?</p>
+    <form method="post">
+      {% csrf_token %}
+      <button class="deleteButton" type="submit">Yes, delete</button>
+      <a style="color: white" href="{% url 'web:playlist_list' %}">Cancel</a>
+    </form>
+</div>
 {% endblock %}

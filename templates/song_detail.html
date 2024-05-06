@@ -1,21 +1,24 @@
 <!-- song_detail.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Song Detail</title>
-</head>
-<body>
-    <h1>{{ song.title }}</h1>
-    <p><strong>Artists:</strong>
-    {% for artist in song.artists.all %}
-        {{ artist.name }}
-        {% if not forloop.last %}, {% endif %}
-    {% endfor %}
-    </p>
-    <p><strong>Album:</strong> {{ song.album }}</p>
-    <p><strong>Duration:</strong> {{ song.duration }}</p>
-    <img src="{{ song.url_imagen }}" alt="Song Image">
-    <p><strong>URL:</strong> <a href="{{ song.url_cancion }}">{{ song.url_cancion }}</a></p>
-</body>
-</html>
+{% extends "home.html" %}
+{% block title %}Song Detail{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="column" style="background-color:#424949">
+        <img style="height: 180px; width: 180px; float: right;" src="{{ song.url_imagen }}" alt="Song Image">
+    </div>
+    <div class="column" style="background-color:#424949;">
+        <h1>{{ song.title }}</h1>
+        <p><strong>Artists:</strong>
+        {% for artist in song.artists.all %}
+            {{ artist.name }}
+            {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+        </p>
+        <p><strong>Album:</strong> {{ song.album }}</p>
+        <p><strong>Duration:</strong> {{ song.duration }}</p>
+        <p><strong>URL:</strong> <a style="color: #4ac1f7" href="{{ song.url_cancion }}">{{ song.url_cancion }}</a></p>
+    </div>
+</div>
+{% endblock content %}
