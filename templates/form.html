@@ -2,15 +2,22 @@
 {% load static %}
 
 {% block content %}
-<div class="login-form">
-    <form  method="post" enctype="multipart/form-data" action="">
+<div class="login-form" style="justify-content: center; width: 115%">
+    <form  method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
-            {{ form.as_table }}
+            {% for field in form %}
+            <tr>
+                <td>
+                    <div style="margin: 10px;">
+                        <label style="font-size: 1.2em;">{{ field.label_tag }}</label>
+                        <div style="font-size: 0.8em;">{{ field }}</div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
         </table>
         <button class="genericButton" type="submit">Crear</button>
     </form>
 </div>
-
-
 {% endblock %}

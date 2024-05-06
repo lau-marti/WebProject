@@ -77,8 +77,14 @@
         // Recorrer las pistas y mostrar la información
         items.forEach(function(item, index) {
             const resultDiv = $('<div>');
+            resultDiv.css({
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center'
+            });
             resultDiv.html(`
-                <p>Canción ${index + 1}:</p>
+                <h1>Canción ${index + 1}:</h1>
                 <p>Nombre: ${item.name}</p>
                 <p>Artista(s): ${item.artists.map((artist, artistIndex) => artist.name + " (" + artistasInfo[index * item.artists.length + artistIndex].genres.join(", ") + ")").join(", ")}</p>
                 <p>Álbum: ${item.album.name}</p>
@@ -133,6 +139,7 @@
             console.log('Canción agregada correctamente');
             window.location.href = `/musicterritory/playlists/${playlistId}`;
             return response.json();
+
         })
         .catch(error => console.error('ERROR:', error));
     }

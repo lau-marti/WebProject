@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Confirm Deletion</h1>
+<h1 style="color: white">Confirm Deletion</h1>
 <p>Are you sure you want to delete the playlist "{{ playlist.name }}"?</p>
 <form method="post">
   {% csrf_token %}
-  <input type="submit" value="Yes, delete" />
-  <a href="{% url 'web:playlist_list' %}">Cancel</a>
+  <button class="deleteButton" type="submit">Yes, delete</button>
+  <a style="color: white" href="{% url 'web:playlist_list' %}">Cancel</a>
 </form>
 {% endblock %}

@@ -16,9 +16,6 @@
 <div class="row">
     <div class="column" style="background-color:#aaa;">
         <form action="{% url 'web:playlist_create' %}" method="get">
-            <input class="search-input" type="text" id="searchPlaylist" placeholder="Search playlists"
-               onkeydown="if (event.keyCode == 13) buscarCancion()">
-            <button class="genericButton" onclick="buscarCancion()">Search</button>
             <div style="display: flex; justify-content: center; align-items: center">
                 <h1>My Playlists</h1>
                 {% if user.is_authenticated %}
@@ -33,7 +30,7 @@
                         <div style="display: flex; justify-content: space-between;align-items: center">
                             <a class="playlistButton" href="{% url 'web:playlist_detail' playlist.id %}">{{ playlist.name }}</a>
                             {% if playlist.user == user %}
-                            <a class="deleteButton" href="{% url 'web:playlist_delete' playlist.id %}">Eliminar</a>
+                            <a class="deleteButton" style="height: 10px" href="{% url 'web:playlist_delete' playlist.id %}">Eliminar</a>
                             {% endif %}
                         </div>
                     </li>
@@ -55,15 +52,16 @@
     </div>
     <div class="column" style="background-color:#bbb;">
         <form>
-            <input class="search-input" type="text" id="searchInput" placeholder="Search for songs, artists, etc."
-               onkeydown="if (event.keyCode == 13) buscarCancion()">
-            <button class="genericButton" onclick="buscarCancion()">Search</button>
+            <input class="search-input" type="text" id="searchPlaylist" placeholder="Search playlists"
+               onkeydown="if (event.keyCode == 13) buscarPlaylist(event)">
+            <button class="genericButton" onclick="buscarPlaylist(event)">Search</button>
         </form>
-        <div id="searchResults"></div>
+        <div id="results"></div>
 
         {% block scripts %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="{% static 'javascript/searchFiveSongs.js' %}"></script>
+        <script src="{% static 'javascript/searchPlaylists.js' %}"></script>
         {% endblock %}
     </div>
 </div>
