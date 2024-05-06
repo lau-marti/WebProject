@@ -70,8 +70,7 @@ class SongCreate(CreateView):
             nombre_album = request.POST.get('nombre_album')
             url_imagen = request.POST.get('url_imagen')
             duracion_str = request.POST.get('duracion')  # Obtener la duración como cadena
-            url_cancion = request.POST.get('url_cancion')
-
+            url_cancion = request.POST.get('url_cancion')  # Obtener la URL de la canción
 
             # Convertir la duración a timedelta
             if duracion_str:
@@ -85,7 +84,7 @@ class SongCreate(CreateView):
             artista, _ = Artist.objects.get_or_create(name=nombre_artista)
 
             # Crear la canción y asociar el artista
-            cancion = Song.objects.create(title=nombre_cancion, album=nombre_album, duration=duracion_timedelta, url_imagen=url_imagen, url_cancion = url_cancion)
+            cancion = Song.objects.create(title=nombre_cancion, album=nombre_album, duration=duracion_timedelta, url_imagen=url_imagen, url_cancion=url_cancion)
             cancion.artists.add(artista)
 
             # Obtener la playlist y agregar la canción
