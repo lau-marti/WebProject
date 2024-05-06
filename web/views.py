@@ -152,3 +152,10 @@ def search_playlists(request):
     playlists = Playlist.objects.filter(name__icontains=query)
     results = [{'id': playlist.id, 'name': playlist.name, 'user': playlist.user.username} for playlist in playlists]
     return JsonResponse({'playlists': results}, safe=False)
+
+
+class SongDetailView(DetailView):
+    model = Song
+    template_name = 'song_detail.html'  # Nombre de la plantilla que mostrará la información detallada de la canción
+    context_object_name = 'song'  # Nombre del objeto de contexto que contendrá la información de la canción en la plantilla
+
