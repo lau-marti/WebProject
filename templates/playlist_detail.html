@@ -9,28 +9,37 @@
         <p class="description">Descripción: {{playlist.description}}</p>
         <p class="user_id">Lista de reproducción creada por: {{playlist.user}}</p>
         <div style="display: flex; justify-content: center; align-items: center">
-            <a href="{% url 'web:playlist_edit' playlist.id %}">
-                <button class="genericButton">Editar Playlist</button>
-            </a>
-            <a href="{% url 'web:song_create' playlist.id %}">
-                <button class="genericButton">Afegir Cançó</button>
-            </a>
+            {% if user.is_authenticated and playlist.user == user %}
+                <!-- Mostrar el botón de editar playlist solo si el usuario está autenticado y es el propietario de la lista de reproducción -->
+                <a href="{% url 'web:playlist_edit' playlist.id %}">
+                    <button class="genericButton">Editar Playlist</button>
+                </a>
+                <!-- Mostrar el botón de añadir canción solo si el usuario está autenticado y es el propietario de la lista de reproducción -->
+                <a href="{% url 'web:song_create' playlist.id %}">
+                    <button class="genericButton">Afegir Cançó</button>
+                </a>
+            {% endif %}
         </div>
     </div>
-    <ul class="cançons">
+    <ul class="cançons" style="margin-top: 20px; text-align: center;">
     {% for song in playlist.songs.all %}
         <li style="display: flex; justify-content: space-between; align-items: center;">
-            <!-- Enlace al detalle de la canción -->
-            <a style="text-decoration: none; font-size: 20px" href="{% url 'web:song_detail' pk=song.pk %}" class="Paragraf1">{{ song.title }}</a>
-            <span>
-                {% for artist in song.artists.all %}
-                    {{ artist.name }}
-                {% endfor %}
-            </span>
-            <form action="{% url 'web:song_delete' playlist.id song.id %}" method="POST" class="inline">
-                {% csrf_token %}
-                <button type="submit" class="deleteButton">Eliminar</button>
-            </form>
+            {% if not user.is_authenticated or not playlist.user == user %}
+                <!-- Si los usuarios no coinciden, centrar el nombre de la canción y el nombre del artista -->
+                <div style="justify-content: center; text-align: center; display: flex; align-items: center; width: 100%;">
+                    <a style="text-decoration: none; font-size: 20px; margin: 0 auto;" href="{% url 'web:song_detail' pk=song.pk %}" class="Paragraf1">{{ song.title }} - {% for artist in song.artists.all %}{{ artist.name }}{% endfor %}</a>
+                </div>
+            {% else %}
+                <!-- Si los usuarios coinciden, mostrar el nombre de la canción y el nombre del artista normalmente -->
+                <a style=" ;text-decoration: none; font-size: 20px" href="{% url 'web:song_detail' pk=song.pk %}" class="Paragraf1">{{ song.title }} - {% for artist in song.artists.all %}{{ artist.name }}{% endfor %}</a>
+            {% endif %}
+            {% if user.is_authenticated and playlist.user == user %}
+                <!-- Mostrar el formulario de eliminación de la canción solo si el usuario está autenticado y es el propietario de la lista de reproducción -->
+                <form action="{% url 'web:song_delete' playlist.id song.id %}" method="POST" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="deleteButton">Eliminar</button>
+                </form>
+            {% endif %}
         </li>
     {% endfor %}
     </ul>
