@@ -20,10 +20,12 @@
     <ul class="cançons">
     {% for song in playlist.songs.all %}
         <li style="display: flex; justify-content: space-between; align-items: center;">
-            <span class="Paragraf1">{{ song.title }} -
-            {% for artist in song.artists.all %}
-                {{ artist.name }}
-            {% endfor %}
+            <!-- Enlace al detalle de la canción -->
+            <a style="text-decoration: none; font-size: 20px" href="{% url 'web:song_detail' pk=song.pk %}" class="Paragraf1">{{ song.title }}</a>
+            <span>
+                {% for artist in song.artists.all %}
+                    {{ artist.name }}
+                {% endfor %}
             </span>
             <form action="{% url 'web:song_delete' playlist.id song.id %}" method="POST" class="inline">
                 {% csrf_token %}

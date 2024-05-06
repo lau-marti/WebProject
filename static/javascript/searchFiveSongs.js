@@ -86,11 +86,11 @@ function displayResults(items, artistasInfo) {
         resultDiv.html(`
             <h1>Canción ${index + 1}:</h1>
             <p>Nombre: ${item.name}</p>
+            <p>Duración: ${msToTime(item.duration_ms)}</p>
             <p>Artista(s): ${item.artists.map((artist, artistIndex) => artist.name + " (" + artistasInfo[index * item.artists.length + artistIndex].genres.join(", ") + ")").join(", ")}</p>
             <p>Álbum: ${item.album.name}</p>
             <p>URL del álbum: <a href="${item.album.external_urls.spotify}" target="_blank">${item.album.external_urls.spotify}</a></p>
-            <p>URL de la imagen del álbum: <img src="${item.album.images[0].url}" alt="Imagen del álbum"></p>
-            <p>Duración: ${msToTime(item.duration_ms)}</p>
+            <img src="${item.album.images[0].url}" alt="Imagen del álbum">
             <button onclick="agregarCancion('${item.name}', '${item.artists[0].name}', '${item.album.name}', '${item.album.images[0].url}', '${msToTime(item.duration_ms)}', '${item.external_urls.spotify}')">Add</button>
             <hr>
         `);
