@@ -304,3 +304,7 @@ h1 {
     max-width: 600px;
     margin: auto;
 }
+
+.no-resize {
+    resize: none;
+}

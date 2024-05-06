@@ -21,7 +21,7 @@ function buscarPlaylist(event) {
                 response.playlists.forEach(function(playlist) {
 
                     var resultButton = document.createElement('button');
-                    resultButton.textContent = playlist.name + '-' + playlist.user;
+                    resultButton.textContent = playlist.name + ' - ' + playlist.user;
                     resultButton.className = 'playlistButton'
                     resultButton.onclick = function() {
                         window.location.href = '/musicterritory/playlists/' + playlist.id;

@@ -14,8 +14,8 @@ class Song(models.Model):
     artists = models.ManyToManyField('Artist', related_name='artists_to_song')
     genre = models.ManyToManyField('Genre', related_name='genres_to_song')
 
-    def __unicode__(self):
-        return u"%s" % self.title
+    def __str__(self):
+        return self.title
 
     def get_absolute_url(self):
         return reverse('web:song_detail.html', kwargs={'pkr': self.song.pk, 'pk': self.pk})
@@ -48,7 +48,7 @@ class Playlist(models.Model):
     genres = models.ManyToManyField(Genre, related_name='genres_to_playlist')
     songs = models.ManyToManyField(Song, related_name='songs_to_playlist')
 
-    def __unicode__(self):
+    def __str__(self):
         return u"%s" % self.name
 
     def get_absolute_url(self):
