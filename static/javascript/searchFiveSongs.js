@@ -77,43 +77,24 @@ function displayResults(items, artistasInfo) {
     // Recorrer las pistas y mostrar la información
     items.forEach(function(item, index) {
         const resultDiv = $('<div>');
-        resultDiv.css({
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center'
-        });
         resultDiv.html(`
-            <!--
-                <h1>Canción ${index + 1}:</h1>
-                <p>Nombre: ${item.name}</p>
-                <p>Duración: ${msToTime(item.duration_ms)}</p>
-                <p>Artista(s): ${item.artists.map((artist, artistIndex) => artist.name + " (" + artistasInfo[index * item.artists.length + artistIndex].genres.join(", ") + ")").join(", ")}</p>
-                <p>Álbum: ${item.album.name}</p>
-                <p>URL del álbum: <a href="${item.album.external_urls.spotify}" target="_blank">${item.album.external_urls.spotify}</a></p>
-                <img src="${item.album.images[0].url}" alt="Imagen del álbum">
-                <button class="genericButton" onclick="agregarCancion('${item.name}', '${item.artists[0].name}', '${item.album.name}', '${item.album.images[0].url}', '${msToTime(item.duration_ms)}', '${item.external_urls.spotify}')">Add</button>
-                <hr>
-            -->
             <div class="row">
                 <div class="column" style="background-color:#424949">
-                    <img style="height: 220px; width: 220px; float: right;" src="${item.album.images[0].url}" alt="Imagen del álbum">
+                    <img style="height: 220px; width: 220px; float: right;" src="${item.album.images[0].url}" alt="Album Image">
                 </div>
                 <div class="column" style="background-color:#424949" >
                     <h1 style="text-align: left; color: white">${item.name}</h1>
                     <p><strong>Artists:</strong>
-                        ${item.artists.map((artist, artistIndex) => artist.name )}
+                        ${item.artists.map((artist) => artist.name)}
                     </p>
-                    <p><strong>Album:</strong> {{ song.album }}</p>
-                    <p><strong>Duration:</strong> {{ song.duration }}</p>
-                    <p><strong>URL:</strong> <a style="color: #4ac1f7" href="{{ song.url_cancion }}">{{ song.url_cancion }}</a></p>
-                </div>
-            </div>
-            <button class="genericButton" onclick="agregarCancion('${item.name}', '${item.artists[0].name}',
+                    <p><strong>Album:</strong> ${item.album.name}</p>
+                    <p><strong>Duration:</strong> ${msToTime(item.duration_ms)}</p>
+                    <p><strong>URL:</strong> <a style="color: #4ac1f7" href="${item.album.external_urls.spotify}" target="_blank">${item.album.external_urls.spotify}</a></p>
+                    <button class="genericButton" onclick="agregarCancion('${item.name}', '${item.artists[0].name}',
                         '${item.album.name}', '${item.album.images[0].url}', '${msToTime(item.duration_ms)}',
                         '${item.external_urls.spotify}')">Add</button>
-            
-            
+                </div>
+            </div>
         `);
         searchResults.append(resultDiv);
     });

@@ -16,7 +16,7 @@ function buscarPlaylist(event) {
 
             if (response.playlists.length === 0) {
 
-                resultsDiv.textContent = 'No existen playlists con ese nombre. Porfavor intentalo de nuevo';
+                resultsDiv.textContent = 'There are no playlists with that name. Please try again';
             } else {
                 response.playlists.forEach(function(playlist) {
 
