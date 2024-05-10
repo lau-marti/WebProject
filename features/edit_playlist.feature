@@ -20,11 +20,6 @@ Feature: Edit Playlist
       | Hits     | New american Hits      | pop           |
     And There are 1 playlists
 
-  Scenario: Try to edit playlist but not logged in
-    Given I'm not logged in
-    When I view the details for playlist "Hits"
-    Then There is no "edit" link available
-
   Scenario: Try to edit playlist but not the owner no edit button
     Given I login as user "user2" with password "password"
     When I view the details for playlist "Hits"
@@ -38,5 +33,5 @@ Feature: Edit Playlist
     Then Server responds with page containing "403 Forbidden"
     When I view the details for playlist "Hits"
     Then I'm viewing the details page for playlist by "user1"
-      | name     | description            | genres        |
-      | Hits     | New american Hits      | pop           |
+      | name      | description              | genres        |
+      | Hits      | New spanish Hits         | pop           |

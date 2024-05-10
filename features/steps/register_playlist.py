@@ -12,7 +12,7 @@ def step_impl(context, username):
     user = User.objects.get(username=username)
     from web.models import Playlist, Genre
     for row in context.table:
-        playlist = Playlist.objects.create(user=user, name=row['name'], date=row['date'])
+        playlist = Playlist.objects.create(user=user, name=row['name'])
         for genre_name in row['genres'].split(','):
             genre, _ = Genre.objects.get_or_create(name=genre_name.strip())
             playlist.genres.add(genre)
@@ -47,8 +47,8 @@ def step_impl(context, name):
     playlist = Playlist.objects.get(name=name)
     context.browser.visit(context.get_url('web:playlist_edit', playlist.pk))
     if context.browser.url == context.get_url('web:playlist_edit', playlist.pk)\
-            and context.browser.find_by_id('input-form'):
-        form = context.browser.find_by_id('input-form')
+            and context.browser.find_by_css('.login-form'):
+        form = context.browser.find_by_css('.login-form')
         for heading in context.table.headings:
             context.browser.fill(heading, context.table[0][heading])
-        form.find_by_value('Submit').first.click()
+        form.find_by_css('.genericButton').first.click()

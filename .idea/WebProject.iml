@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/project" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/web" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Poetry (WebProject) (12)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Poetry (WebProject) (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">
