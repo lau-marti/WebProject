@@ -17,7 +17,8 @@ def step_impl(context, playlist_name, username):
     playlist = Playlist.objects.get(name=playlist_name)
     from web.models import Song
     for row in context.table:
-        song = Song(playlist=playlist, user=user)
+        song = Song.objects.create(title=row['name'])
+        playlist.songs.add(song)
         for heading in row.headings:
             setattr(song, heading, row[heading])
         song.save()

@@ -7,7 +7,7 @@ function obtenerToken(callback) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic ' + btoa('7f44fa05891c4b0388022a3317aea4cb:d9e691dd766a45509a5f4f9b8ce026c6')
+            'Authorization': 'Basic ' + btoa('7f44fa05891c4b0388022a3317aea4cb:3f2c3b851b4a4973b44ae04c7bbaf4b7')
         },
         data: 'grant_type=client_credentials',
         success: function(response) {

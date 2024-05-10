@@ -7,9 +7,9 @@ Feature: View Playlist
     Given Exists a user "user1" with password "password"
     And Exists a user "user2" with password "password"
     And Exists playlist registered by "user1"
-      | name            | description         | date          | genres      |
-      | Famous          | Form singer Famous  | 2023-05-23    | pop, rock   |
-      | Unknown         |                     | 2002-o6-09    | alternative |
+      | name            | description         | date          | genres      | songs                     |
+      | Famous          | Form singer Famous  | 2023-05-23    | pop, rock   | Fish and Chips, Apple Pie |
+      | Unknown         |                     | 2002-o6-09    | alternative |                           |
     And Exists song at playlist "Famous" by "user1"
       | name            |
       | Fish and Chips  |

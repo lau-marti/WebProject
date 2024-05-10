@@ -5,7 +5,7 @@
 {% block content %}
     <input class="search-input" type="text" id="searchInput"
            placeholder="Search for songs, artists, etc."
-           onkeydown="if (event.keyCode == 13) buscarCancion()"> <!--Per buscar al apretar ENTER-->
+           onkeydown="if (event.keyCode == 13) buscarCancion()"><!--Per buscar al apretar ENTER-->
     <button class="genericButton" onclick="buscarCancion()">Search</button>
     <div id="searchResults"></div>
 {% block scripts %}
