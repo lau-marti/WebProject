@@ -28,7 +28,7 @@
                 {% for playlist in user_playlists %}
                     <li>
                         <div style="display: flex; justify-content: space-between;align-items: center">
-                            <a class="playlistButton" href="{% url 'web:playlist_detail' playlist.id %}">{{ playlist.name }}</a>
+                            <a  class="playlistButton" id="myplaylists" href="{% url 'web:playlist_detail' playlist.id %}">{{ playlist.name }}</a>
                             {% if playlist.user == user %}
                             <a class="deleteButton" style="height: 10px" href="{% url 'web:playlist_delete' playlist.id %}">Eliminar</a>
                             {% endif %}
@@ -44,7 +44,7 @@
         <h1>All Playlists</h1>
         <ul>
             {% for playlist in all_playlists %}
-                <li><a class="playlistButton" href="{% url 'web:playlist_detail' playlist.id %}">{{ playlist.name }}</a></li>
+                <li><a  class="playlistButton" id="allplaylists" href="{% url 'web:playlist_detail' playlist.id %}">{{ playlist.name }}</a></li>
             {% empty %}
                 <li>Sorry, no playlists registered yet.</li>
             {% endfor %}
