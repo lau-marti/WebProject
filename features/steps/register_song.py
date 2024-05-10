@@ -45,7 +45,7 @@ def step_impl(context, playlist_name, username):
     from django.contrib.auth.models import User
     q_list.append(Q(('user', User.objects.get(username=username))))
     from web.models import Playlist
-    q_list.append(Q(('restaurant', Playlist.objects.get(name=playlist_name))))
+    q_list.append(Q(('playlist', Playlist.objects.get(name=playlist_name))))
     from web.models import Song
     song = Song.objects.filter(reduce(operator.and_, q_list)).get()
     assert context.browser.url == context.get_url(song)
