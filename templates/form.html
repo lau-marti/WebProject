@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<div class="login-form" style="justify-content: center; width: 115%">
+<div class="login-form" style="justify-content: center">
     <form  method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
@@ -11,7 +11,7 @@
                 <td>
                     <div style="margin: 10px;">
                         <label style="font-size: 1.2em;">{{ field.label_tag }}</label>
-                        <div style="font-size: 0.8em;">{{ field }}</div>
+                        <div style="font-size: 0.8em; resize: none">{{ field }}</div>
                     </div>
                 </td>
             </tr>

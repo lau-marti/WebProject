@@ -56,4 +56,7 @@ urlpatterns = [
 
     path('search_playlists/', search_playlists, name='search_playlists'),
 
+    path('songs/<int:pk>/', views.SongDetailView.as_view(), name='song_detail'),
+
+
 ]

@@ -51,7 +51,7 @@ class Playlist(models.Model):
     genres = models.ManyToManyField(Genre, related_name='genres_to_playlist')
     songs = models.ManyToManyField(Song, related_name='songs_to_playlist')
 
-    def __unicode__(self):
+    def __str__(self):
         return u"%s" % self.name
 
     def get_absolute_url(self):
