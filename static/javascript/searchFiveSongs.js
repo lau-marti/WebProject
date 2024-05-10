@@ -25,7 +25,7 @@ function buscarCancion() {
     const nombreCancion = $('#searchInput').val();
     obtenerToken(function() {
         $.ajax({
-            url: `https://api.spotify.com/v1/search?q=${encodeURIComponent('track:' + nombreCancion)}&type=track`,
+            url:`https://api.spotify.com/v1/search?q=${encodeURIComponent('track:' + nombreCancion)}&type=track`,
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + accessToken
@@ -95,6 +95,7 @@ function displayResults(items, artistasInfo) {
                         '${item.external_urls.spotify}')">Add</button>
                 </div>
             </div>
+            <div class="separator" style="background-color: black"></div>
         `);
         searchResults.append(resultDiv);
     });
