@@ -1,7 +1,7 @@
 Feature: List Playlists
   In order to keep myself up to date about playlists registered in web
   As a registered user
-  I want to list the last 5 registered playlists
+  I want to list the last registered playlists
 
   Background: There is a registered user and 5 registered playlists by diferent users
     Given Exists a user "user" with password "password"
