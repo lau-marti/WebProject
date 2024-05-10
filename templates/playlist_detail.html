@@ -8,14 +8,16 @@
         <h1 class="PlaylistName">{{ playlist.name }}</h1>
         <p class="description">Descripción: {{playlist.description}}</p>
         <p class="user_id">Lista de reproducción creada por: {{playlist.user}}</p>
-        <div style="display: flex; justify-content: center; align-items: center">
-            <a href="{% url 'web:playlist_edit' playlist.id %}">
-                <button class="genericButton">Editar Playlist</button>
-            </a>
-            <a href="{% url 'web:song_create' playlist.id %}">
-                <button class="genericButton">Afegir Cançó</button>
-            </a>
-        </div>
+        {% if user.is_authenticated and user == playlist.user %}
+            <div style="display: flex; justify-content: center; align-items: center">
+                <a href="{% url 'web:playlist_edit' playlist.id %}">
+                    <button class="genericButton">Editar Playlist</button>
+                </a>
+                <a href="{% url 'web:song_create' playlist.id %}">
+                    <button class="genericButton">Afegir Cançó</button>
+                </a>
+            </div>
+        {% endif %}
     </div>
     <ul class="cançons">
     {% for song in playlist.songs.all %}
@@ -30,10 +32,12 @@
                         {{ artist.name }}
                     {% endfor %}
                 </span>
-                <form action="{% url 'web:song_delete' playlist.id song.id %}" method="POST" class="inline">
-                    {% csrf_token %}
-                    <button type="submit" class="deleteButton">Eliminar</button>
-                </form>
+                {% if user.is_authenticated and user == playlist.user %}
+                    <form action="{% url 'web:song_delete' playlist.id song.id %}" method="POST" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="deleteButton">Eliminar</button>
+                    </form>
+                {% endif %}
             </buton>
         </li>
     {% endfor %}
