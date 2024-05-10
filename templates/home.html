@@ -21,7 +21,7 @@
             <div style="display: flex; justify-content: center; align-items: center">
                 <h1>My Playlists</h1>
                 {% if user.is_authenticated %}
-                    <button class="genericButton large-button" type="submit">Crea una playlist</button>
+                    <button class="genericButton large-button" type="submit">New Playlist</button>
                 {% endif %}
             </div>
         </form>
@@ -32,7 +32,7 @@
                         <div style="display: flex; justify-content: space-between;align-items: center">
                             <a  class="playlistButton myplaylists" href="{% url 'web:playlist_detail' playlist.id %}">{{ playlist.name }}</a>
                             {% if playlist.user == user %}
-                            <a class="deleteButton" style="height: 10px" href="{% url 'web:playlist_delete' playlist.id %}">Eliminar</a>
+                            <a class="deleteButton" style="height: 12px" href="{% url 'web:playlist_delete' playlist.id %}">Delete</a>
                             {% endif %}
                         </div>
                     </li>
@@ -43,7 +43,9 @@
                 <li>Sorry, you have to log in.</li>
             {% endif %}
         </ul>
-        <h1>All Playlists</h1>
+        <div style="display: flex; justify-content: center; align-items: center">
+            <h1>All Playlists</h1>
+        </div>
         <ul>
             {% for playlist in all_playlists %}
                 <li><a  class="playlistButton allplaylists" href="{% url 'web:playlist_detail' playlist.id %}">{{ playlist.name }}</a></li>
