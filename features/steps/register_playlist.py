@@ -38,8 +38,8 @@ def step_impl(context, username):
     from django.contrib.auth.models import User
     q_list.append(Q(('user', User.objects.get(username=username))))
     from web.models import Playlist
-    restaurant = Playlist.objects.filter(reduce(operator.and_, q_list)).get()
-    assert context.browser.url == context.get_url(restaurant)
+    playlist = Playlist.objects.filter(reduce(operator.and_, q_list)).get()
+    assert context.browser.url == context.get_url(playlist)
 
 @when('I edit the playlist with name "{name}"')
 def step_impl(context, name):

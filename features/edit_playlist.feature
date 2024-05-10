@@ -20,10 +20,15 @@ Feature: Edit Playlist
       | Hits     | New american Hits      | pop           |
     And There are 1 playlists
 
+  Scenario: Try to edit playlist and the owner edit button
+    Given I login as user "user1" with password "password"
+    When I view the details for playlist "Hits"
+    Then There is "Editar Playlist" link available
+
   Scenario: Try to edit playlist but not the owner no edit button
     Given I login as user "user2" with password "password"
     When I view the details for playlist "Hits"
-    Then There is no "edit" link available
+    Then There is no "Editar Playlist" link available
 
   Scenario: Force edit playlist but not the owner permission exception
     Given I login as user "user2" with password "password"
