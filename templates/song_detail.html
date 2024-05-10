@@ -6,10 +6,10 @@
 
 <div class="row">
     <div class="column" style="background-color:#424949">
-        <img style="height: 180px; width: 180px; float: right;" src="{{ song.url_imagen }}" alt="Song Image">
+        <img style="height: 220px; width: 220px; float: right;" src="{{ song.url_imagen }}" alt="Song Image">
     </div>
-    <div class="column" style="background-color:#424949;">
-        <h1>{{ song.title }}</h1>
+    <div class="column" style="background-color:#424949" >
+        <h1 style="text-align: left; color: white">{{ song.title }}</h1>
         <p><strong>Artists:</strong>
         {% for artist in song.artists.all %}
             {{ artist.name }}
