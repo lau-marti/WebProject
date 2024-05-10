@@ -10,19 +10,19 @@ use_step_matcher("parse")
 def step_impl(context, username):
     from django.contrib.auth.models import User
     user = User.objects.get(username=username)
-    from web.models import Playlist
+    from web.models import Playlist, Genre
     for row in context.table:
-        restaurant = Playlist(user=user)
-        for heading in row.headings:
-            setattr(restaurant, heading, row[heading])
-        restaurant.save()
+        playlist = Playlist.objects.create(user=user, name=row['name'])
+        for genre_name in row['genres'].split(','):
+            genre, _ = Genre.objects.get_or_create(name=genre_name.strip())
+            playlist.genres.add(genre)
 
 @when('I register playlist')
 def step_impl(context):
     for row in context.table:
         context.browser.visit(context.get_url('web:playlist_create'))
         if context.browser.url == context.get_url('web:playlist_create'):
-            form = context.browser.find_by_id('input-form')
+            form = context.browser.find_by_id('inputform')
             for heading in row.headings:
                 context.browser.fill(heading, row[heading])
             form.find_by_value('Submit').first.click()
@@ -44,11 +44,11 @@ def step_impl(context, username):
 @when('I edit the playlist with name "{name}"')
 def step_impl(context, name):
     from web.models import Playlist
-    restaurant = Playlist.objects.get(name=name)
-    context.browser.visit(context.get_url('web:playlist_edit', restaurant.pk))
-    if context.browser.url == context.get_url('web:playlist_edit', restaurant.pk)\
-            and context.browser.find_by_id('input-form'):
-        form = context.browser.find_by_id('input-form')
+    playlist = Playlist.objects.get(name=name)
+    context.browser.visit(context.get_url('web:playlist_edit', playlist.pk))
+    if context.browser.url == context.get_url('web:playlist_edit', playlist.pk)\
+            and context.browser.find_by_css('.login-form'):
+        form = context.browser.find_by_css('.login-form')
         for heading in context.table.headings:
             context.browser.fill(heading, context.table[0][heading])
-        form.find_by_value('Submit').first.click()
+        form.find_by_css('.genericButton').first.click()

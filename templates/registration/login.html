@@ -6,11 +6,11 @@
 <!--<h2>Inici Sessió</h2>-->
 <div class="login-form">
     <h2>Iniciar Sessió</h2>
-    <form action="{% url 'login' %}" method="post">
+    <form id="loginform" action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <input type="text" placeholder="Usuari" name="username" required>
         <input type="password" placeholder="Contrasenya" name="password" required>
-        <button class=genericButton type="submit">Iniciar Sessió</button>
+        <button class=genericButton id="submitlogin" type="submit">Iniciar Sessió</button>
     </form>
 </div>
 {% endblock %}
