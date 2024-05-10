@@ -52,3 +52,36 @@ def step_impl(context, name):
         for heading in context.table.headings:
             context.browser.fill(heading, context.table[0][heading])
         form.find_by_css('.genericButton').first.click()
+
+@when(u'I click on the "Create a playlist" button')
+def step_impl(context):
+    # Hacer clic en el botón "Create a playlist"
+    context.browser.find_by_css('.genericButton.large-button').first.click()
+
+@when(u'I fill out the playlist form with')
+def step_impl(context):
+    for row in context.table:
+        for heading in row.headings:
+            if heading != 'genre':
+                context.browser.fill(heading, row[heading])
+        # Seleccionar el género deseado
+        genre = row['genre']
+        # Hacer clic en el género deseado en el formulario
+        context.browser.find_option_by_text(genre).first.click()
+
+@when(u'I submit the playlist form')
+def step_impl(context):
+    # Enviar el formulario
+    context.browser.find_by_css('.genericButton[type="submit"]').first.click()
+
+@then('I\'m on the details page for playlist by "{username}"')
+def step_impl(context, username):
+    from django.contrib.auth.models import User
+    user = User.objects.get(username=username)
+    from web.models import Playlist
+    playlist = Playlist.objects.filter(user=user).first()
+
+    assert context.browser.url == context.get_url(playlist)
+
+
+
