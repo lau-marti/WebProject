@@ -3,10 +3,12 @@
 {% block title %}Búsqueda de Canciones{% endblock %}
 
 {% block content %}
-    <input class="search-input" type="text" id="searchInput"
-           placeholder="Search for songs, artists, etc."
-           onkeydown="if (event.keyCode == 13) buscarCancion()"><!--Per buscar al apretar ENTER-->
-    <button class="genericButton" onclick="buscarCancion()">Search</button>
+    <div style="display: flex; justify-content: center; align-items: center">
+        <input class="search-input" type="text" id="searchInput"
+               placeholder="Search for songs, artists, etc."
+               onkeydown="if (event.keyCode == 13) buscarCancion()"><!--Per buscar al apretar ENTER-->
+        <button class="genericButton" onclick="buscarCancion()">Search</button>
+    </div>
     <div id="searchResults"></div>
 {% block scripts %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
