@@ -52,3 +52,31 @@ def step_impl(context, name):
         for heading in context.table.headings:
             context.browser.fill(heading, context.table[0][heading])
         form.find_by_value('Submit').first.click()
+
+@when('I click on the "Create a playlist" button')
+def step_impl(context):
+    # Verificar si el usuario está autenticado antes de hacer clic en el botón
+    if context.browser.is_element_present_by_css('.genericButton.large-button'):
+        # Hacer clic en el botón "Create a playlist" usando las clases CSS
+        context.browser.find_by_css('.genericButton.large-button').first.click()
+    else:
+        # Si el botón no se encuentra, levantar una excepción
+        raise Exception('Button "Create a playlist" not found')
+
+@when('I fill out the playlist form with')
+def step_impl(context):
+    for row in context.table:
+        for heading in row.headings:
+            if heading != 'genre':
+                context.browser.fill(heading, row[heading])
+        # Seleccionar el género deseado
+        genre = row['genre']
+        context.browser.select('genre', genre)
+
+
+@when('I submit the playlist form')
+def step_impl(context):
+    # Encontrar y hacer clic en el botón de submit
+    context.browser.find_by_value('Submit').first.click()
+
+
