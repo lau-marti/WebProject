@@ -6,15 +6,15 @@
 <div class="container">
     <div class="playlist-header" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
         <h1 class="PlaylistName">{{ playlist.name }}</h1>
-        <p class="description">Descripción: {{playlist.description}}</p>
-        <p class="user_id">Lista de reproducción creada por: {{playlist.user}}</p>
+        <p class="description">Description: {{playlist.description}}</p>
+        <p class="user_id">Playlist created by: {{playlist.user}}</p>
         {% if user.is_authenticated and user == playlist.user %}
             <div style="display: flex; justify-content: center; align-items: center">
                 <a href="{% url 'web:playlist_edit' playlist.id %}">
-                    <button class="genericButton">Editar Playlist</button>
+                    <button class="genericButton">Edit Playlist</button>
                 </a>
                 <a href="{% url 'web:song_create' playlist.id %}">
-                    <button class="genericButton">Afegir Cançó</button>
+                    <button class="genericButton">Add Song</button>
                 </a>
             </div>
         {% endif %}
@@ -35,7 +35,7 @@
                 {% if user.is_authenticated and user == playlist.user %}
                     <form action="{% url 'web:song_delete' playlist.id song.id %}" method="POST" class="inline">
                         {% csrf_token %}
-                        <button type="submit" class="deleteButton">Eliminar</button>
+                        <button type="submit" class="deleteButton">Delete</button>
                     </form>
                 {% endif %}
             </buton>

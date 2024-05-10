@@ -160,6 +160,7 @@ body {
     height: 2px;
     background-color: white;
 }
+
 .return-home-link {
     font-size: smaller; /* Esto hará que el texto sea más pequeño */
     text-decoration: underline; /* Elimina el subrayado */
