@@ -12,6 +12,8 @@ spotipy = "^2.23.0"
 behave = "==1.2.*"
 splinter = "==0.*"
 behave-django = "==1.4.*"
+selenium = "^4.20.0"
+chromedriver = "^2.24.1"
 
 
 
