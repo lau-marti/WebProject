@@ -25,7 +25,7 @@ function buscarCancion() {
     const nombreCancion = $('#searchInput').val();
     obtenerToken(function() {
         $.ajax({
-            url:`https://api.spotify.com/v1/search?q=${encodeURIComponent('track:' + nombreCancion)}&type=track`,
+            url: `https://api.spotify.com/v1/search?q=${encodeURIComponent('track:' + nombreCancion)}&type=track`,
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + accessToken
@@ -95,7 +95,6 @@ function displayResults(items, artistasInfo) {
                         '${item.external_urls.spotify}')">Add</button>
                 </div>
             </div>
-            <div class="separator" style="background-color: black"></div>
         `);
         searchResults.append(resultDiv);
     });
@@ -122,7 +121,7 @@ function agregarCancion(nombreCancion, nombreArtista, nombreAlbum, urlImagen, du
     formData.append('nombre_album', nombreAlbum);
     formData.append('url_imagen', urlImagen);
     formData.append('duracion', duracion);
-    formData.append('url_cancion', urlCancion); // Aquí estaba el error, `fromData` debería ser `formData`
+    formData.append('url_cancion', urlCancion); // Aquí estaba el error, fromData debería ser formData
 
     // Obtener el token CSRF de la cookie
     const csrftoken = getCookie('csrftoken');
