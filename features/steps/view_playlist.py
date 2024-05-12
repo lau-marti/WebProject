@@ -9,13 +9,14 @@ def step_impl(context, playlist_name):
     context.browser.visit(context.get_url('web:playlist_detail', playlist.pk))
 @then("I'm viewing a playlist songs list containing")
 def step_impl(context):
-    dish_links = context.browser.find_by_css('div#content button')
+    song_links = context.browser.find_by_css('.Paragraf1')
     for i, row in enumerate(context.table):
-        assert row['name'] == dish_links[i].text
+        assert row['name'] == song_links[i].text
 
 @step("The list contains {count:n} songs")
 def step_impl(context, count):
-    assert count == len(context.browser.find_by_css('div#content button'))
+    assert count == len(context.browser.find_by_css('.Paragraf1'))
+
 
 @then("I'm viewing playlists details including")
 def step_impl(context):
