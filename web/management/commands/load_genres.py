@@ -3,6 +3,7 @@ from web.models import Genre
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
+
 class Command(BaseCommand):
     help = 'Carga los géneros de música desde Spotify y los guarda en un archivo de texto'
 

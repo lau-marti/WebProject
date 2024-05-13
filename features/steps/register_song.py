@@ -23,6 +23,7 @@ def step_impl(context, playlist_name, username):
             setattr(song, heading, row[heading])
         song.save()
 
+
 @when('I register song at playlist "{playlist_name}"')
 def step_impl(context, playlist_name):
     from web.models import Playlist
@@ -39,6 +40,7 @@ def step_impl(context, playlist_name):
                     context.browser.fill(heading, row[heading])
             form.find_by_value('Submit').first.click()
 
+
 @then('I\'m viewing the details page for song at playlist "{playlist_name}" by "{username}"')
 def step_impl(context, playlist_name, username):
     q_list = [Q((attribute, context.table.rows[0][attribute])) for attribute in context.table.headings]
@@ -52,8 +54,8 @@ def step_impl(context, playlist_name, username):
     if song.image:
         song.image.delete()
 
+
 @then('There are {count:n} songs')
 def step_impl(context, count):
     from web.models import Song
     assert count == Song.objects.count()
-
