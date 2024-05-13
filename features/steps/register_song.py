@@ -53,6 +53,7 @@ def step_impl(context, song_title, playlist_name):
 
 
 
+
 @then('I\'m viewing the details page for song at playlist "{playlist_name}" by "{username}"')
 def step_impl(context, playlist_name, username):
     q_list = [Q((attribute, context.table.rows[0][attribute])) for attribute in context.table.headings]
@@ -65,6 +66,7 @@ def step_impl(context, playlist_name, username):
     assert context.browser.url == context.get_url(song)
     if song.image:
         song.image.delete()
+
 
 @then('There are {count:n} songs')
 def step_impl(context, count):
