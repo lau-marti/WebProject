@@ -5,6 +5,7 @@ Feature: Search Playlists
 
   Background: There is a registered user and a registered playlist
     Given Exists a user "user" with password "password"
+    Given Exists a user "user1" with password "password1"
     And Exists playlist registered by "user"
       | name            | date        | genres    |
       | The First       | 1970-01-01  | pop, rock |
@@ -13,6 +14,11 @@ Scenario: Search for an existing playlist
     Given I login as user "user" with password "password"
     When I search for the playlist with name "The First"
     Then The playlist with name "The First" should exist
+  
+Scenario: Search for an existing playlist created by another user
+    Given I login as user "user1" with password "password1"
+    When I search for the playlist with name "The First"
+    Then The playlist with name "The First" should not exist
 
 Scenario: Search for a non-existing playlist
     Given I login as user "user" with password "password"
