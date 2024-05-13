@@ -90,11 +90,12 @@ function displayResults(items, artistasInfo) {
                     <p><strong>Album:</strong> ${item.album.name}</p>
                     <p><strong>Duration:</strong> ${msToTime(item.duration_ms)}</p>
                     <p><strong>URL:</strong> <a style="color: #4ac1f7" href="${item.album.external_urls.spotify}" target="_blank">${item.album.external_urls.spotify}</a></p>
-                    <button class="genericButton" id="add_${index}" onclick="agregarCancion('${item.name}', '${item.artists[0].name}',
+                    <button class="genericButton addButton" onclick="agregarCancion('${item.name}', '${item.artists[0].name}',
                         '${item.album.name}', '${item.album.images[0].url}', '${msToTime(item.duration_ms)}',
                         '${item.external_urls.spotify}')">Add</button>
                 </div>
             </div>
+            <div class="separator" style="background-color: black"></div>
         `);
         searchResults.append(resultDiv);
     });

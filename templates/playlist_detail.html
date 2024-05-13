@@ -6,6 +6,19 @@
 <div class="container">
     <div class="playlist-header" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
         <h1 class="PlaylistName">{{ playlist.name }}</h1>
+            <span style="color: white;">
+                Genre/s:
+                {% with genres=playlist.genres.all %}
+                    {% for genre in genres %}
+                        {% if not forloop.last %}
+                            {{ genre }},
+                        {% else %}
+                            {{ genre }}
+                        {% endif %}
+                    {% endfor %}
+                {% endwith %}
+            </span>
+
         <p class="description">Description: {{playlist.description}}</p>
         <p class="user_id">Playlist created by: {{playlist.user}}</p>
         {% if user.is_authenticated and user == playlist.user %}
@@ -14,7 +27,7 @@
                     <button class="genericButton">Edit Playlist</button>
                 </a>
                 <a href="{% url 'web:song_create' playlist.id %}">
-                    <button class="genericButton">Add Song</button>
+                    <button class="genericButton addSongButton">Add Song</button>
                 </a>
             </div>
         {% endif %}
@@ -27,7 +40,7 @@
                 <img style="height: 40px; width: 40px; border-radius: 10px" src="{{ song.url_imagen }}" alt="Song Image">
                 <!-- Enlace al detalle de la canción -->
                 <a style="text-decoration: none; font-size: 20px;" href="{% url 'web:song_detail' pk=song.pk %}" class="Paragraf1">{{ song.title }}</a>
-                <span>
+                <span style="color: white;">
                     {% for artist in song.artists.all %}
                         {{ artist.name }}
                     {% endfor %}

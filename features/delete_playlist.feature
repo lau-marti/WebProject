@@ -12,15 +12,16 @@ Feature: Delete Playlists
 
   Scenario: Delete my playlist
     Given I login as user "user" with password "password"
+    When I attempt to delete the playlist with name "The First"
     When I delete the playlist with name "The First"
     Then The playlist with name "The First" should not exist
 
-  Scenario: Cannot  delete another user's playlist
+  Scenario: Cannot delete another user's playlist
     Given I login as user "user1" with password "password1"
     When I attempt to delete the playlist with name "The First"
     Then The playlist with name "The First" should still exist
     
   Scenario: Try to delete another user's playlist
     Given I login as user "user1" with password "password1"
-    When I delete the playlist with name "The First"
+    When I attempt to delete the playlist with name "The First"
     Then Server responds with page containing "403 Forbidden"
