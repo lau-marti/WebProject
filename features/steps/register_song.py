@@ -52,8 +52,6 @@ def step_impl(context, song_title, playlist_name):
         time.sleep(2)
 
 
-
-
 @then('I\'m viewing the details page for song at playlist "{playlist_name}" by "{username}"')
 def step_impl(context, playlist_name, username):
     q_list = [Q((attribute, context.table.rows[0][attribute])) for attribute in context.table.headings]
