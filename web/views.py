@@ -24,6 +24,17 @@ class CheckIsOwnerMixin(object):
 
 class LoginRequiredCheckIsOwnerUpdateView(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
     template_name ='form.html'
+    def get(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            playlist_pk = self.kwargs.get('pk')
+            try:
+                playlist = Playlist.objects.get(pk=playlist_pk)
+                # Verificar si el usuario actual es el creador de la playlist
+                if playlist.user != request.user:
+                    # Si el usuario no es el creador, devolver un error 403 Forbidden
+                    return render(request, '403.html', status=403)
+            except Playlist.DoesNotExist:
+                raise Http404("La playlist no existe")
 
 class PlaylistList(ListView):
     model = Playlist
@@ -40,6 +51,18 @@ class DeletePlaylist(DeleteView):
     model = Playlist
     template_name = 'playlist_confirm_delete.html'  # Plantilla para confirmar la eliminación
     success_url = reverse_lazy('web:playlist_list')  # URL a la que se redireccionará después de la eliminación
+    def get(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            playlist_pk = self.kwargs.get('pk')
+            try:
+                playlist = Playlist.objects.get(pk=playlist_pk)
+                # Verificar si el usuario actual es el creador de la playlist
+                if playlist.user != request.user:
+                    # Si el usuario no es el creador, devolver un error 403 Forbidden
+                    return render(request, '403.html', status=403)
+            except Playlist.DoesNotExist:
+                raise Http404("La playlist no existe")
+
 
 class PlaylistCreate(LoginRequiredMixin, CreateView):
     model = Playlist
@@ -57,13 +80,35 @@ class PlaylistDetail(DetailView):
         context = super(PlaylistDetail, self).get_context_data(**kwargs)
         return context
 
+
 class SongCreate(CreateView):
     model = Song
     fields = ['title', 'album', 'artists']
-    template_name = 'add_song.html'  # Plantilla para el formulario de creación
+    template_name = 'add_song.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            playlist_pk = self.kwargs.get('pk')
+            try:
+                playlist = Playlist.objects.get(pk=playlist_pk)
+                # Verificar si el usuario actual es el creador de la playlist
+                if playlist.user != request.user:
+                    # Si el usuario no es el creador, devolver un error 403 Forbidden
+                    return render(request, '403.html', status=403)
+            except Playlist.DoesNotExist:
+                raise Http404("La playlist no existe")
 
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
+            playlist_pk = self.kwargs.get('pk')
+            try:
+                playlist = Playlist.objects.get(pk=playlist_pk)
+                # Verificar si el usuario actual es el creador de la playlist
+                if playlist.user != request.user:
+                    # Si el usuario no es el creador, devolver un error 403 Forbidden
+                    return render(request, '403.html', status=403)
+            except Playlist.DoesNotExist:
+                raise Http404("La playlist no existe")
             # Obtener los datos de la solicitud POST
             nombre_cancion = request.POST.get('nombre_cancion')
             nombre_artista = request.POST.get('nombre_artista')
@@ -100,6 +145,19 @@ class SongCreate(CreateView):
 
 class SongDelete(DeleteView):
     model = Song
+
+    def get(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            playlist_pk = self.kwargs.get('pk')
+            try:
+                playlist = Playlist.objects.get(pk=playlist_pk)
+                # Verificar si el usuario actual es el creador de la playlist
+                if playlist.user != request.user:
+                    # Si el usuario no es el creador, devolver un error 403 Forbidden
+                    return render(request, '403.html', status=403)
+            except Playlist.DoesNotExist:
+                raise Http404("La playlist no existe")
+
     def post(self, request, *args, **kwargs):
         # Obtener la instancia de la lista de reproducción
         playlist = get_object_or_404(Playlist, pk=self.kwargs['pk'])

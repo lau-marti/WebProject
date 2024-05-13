@@ -9,7 +9,7 @@
     <h2>Hi {{ user.username }}!</h2>
   <form action="{% url 'logout' %}" method="post">  <!--Formulario para cerrar sesión-->
     {% csrf_token %}
-    <button class="genericButton" type="submit">Log Out</button>
+    <button class="genericButton logoutButton" type="submit">Log Out</button>
   </form>
 </div>
 
@@ -32,7 +32,7 @@
                         <div style="display: flex; justify-content: space-between;align-items: center">
                             <a  class="playlistButton myplaylists" href="{% url 'web:playlist_detail' playlist.id %}">{{ playlist.name }}</a>
                             {% if playlist.user == user %}
-                            <a class="deleteButton" style="height: 12px" href="{% url 'web:playlist_delete' playlist.id %}">Delete</a>
+                            <a class="deleteButton" data-pk={{playlist.name}} style="height: 12px" href="{% url 'web:playlist_delete' playlist.id %}">Delete</a>
                             {% endif %}
                         </div>
                     </li>
@@ -80,7 +80,7 @@
 
         <form action="{% url 'login' %}" method="post"> <!-- We can add a form to log out here -->
             {% csrf_token %}
-            <button class="genericButton" type="submit">Log In</button>
+            <button class="genericButton loginButton" type="submit">Log In</button>
         </form>
         <form action="{% url 'signup' %}" method="post"> <!-- We can add a form to log out here -->
             {% csrf_token %}
