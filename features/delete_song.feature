@@ -32,5 +32,3 @@ Feature: Delete Song
     And I go to the playlist detail page for "Playlist1"
     And I remember the number of songs in the playlist
     When I try to delete song with name "Dragon Ball Rap" from the playlist makes exception
-
-

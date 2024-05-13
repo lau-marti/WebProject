@@ -14,7 +14,6 @@ from web.models import Playlist
 
 
 class UnwantedElementException(Exception):
-    """Excepción lanzada cuando se encuentra un elemento no deseado."""
 
     def __init__(self, element_text):
         self.element_text = element_text
@@ -23,24 +22,19 @@ class UnwantedElementException(Exception):
 
 @given('Create a user "{username}" with password "{password}"')
 def create_user(context, username, password):
-    # Crear un nuevo usuario
     context.user = User.objects.create_user(username=username, email='', password=password)
 
 
 @given('Create playlist "{playlist_name}" registered by "{username}"')
 def create_playlist(context, playlist_name, username):
-    # Buscar al usuario por nombre de usuario
     user = User.objects.get(username=username)
 
-    # Crear una lista de reproducción para el usuario
     playlist = Playlist.objects.create(user=user, name=playlist_name)
 
-    # Agregar la lista de reproducción al contexto para que esté disponible en otros pasos
     context.playlist = playlist
 
 @given('Playlist "{playlist_song}" registered by "{user}" contains the songs')
 def add_songs_to_playlist(context, playlist_song, user):
-    # Código para agregar canciones a la lista de reproducción en la base de datos de prueba
     for row in context.table:
         title = row["song_title"]
         album = row["album"]
@@ -71,15 +65,13 @@ def step_impl(context, username, password):
 
 @when('I delete a song with name "{song_name}" from the playlist')
 def delete_song(context, song_name):
-    # Encontrar el elemento que contiene el texto del nombre de la canción y hacer clic en él
     context.browser.find_by_text(song_name).first.click()
 
 
 @then('the playlist should contain 1 fewer song')
 def verify_playlist_song_count(context):
-    # Verificar que la cantidad de canciones en la lista de reproducción ha disminuido en 1
     initial_song_count = len(context.playlist.songs.all())
-    context.browser.reload()  # Recargar la página para actualizar la lista de canciones
+    context.browser.reload()
     final_song_count = len(context.browser.find_by_css('.cançons li'))
     assert initial_song_count - 1 == final_song_count
 

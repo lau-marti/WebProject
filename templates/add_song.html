@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Búsqueda de Canciones{% endblock %}
-
 {% block content %}
     <div style="display: flex; justify-content: center; align-items: center">
         <input class="search-input" type="text" id="searchInput" name="search"
@@ -13,6 +12,5 @@
 {% block scripts %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{% static 'javascript/searchFiveSongs.js' %}"></script>
-
 {% endblock %}
 {% endblock %}

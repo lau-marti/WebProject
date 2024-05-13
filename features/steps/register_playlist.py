@@ -55,7 +55,6 @@ def step_impl(context, name):
 
 @when(u'I click on the "Create a playlist" button')
 def step_impl(context):
-    # Hacer clic en el botón "Create a playlist"
     context.browser.find_by_css('.genericButton.large-button').first.click()
 
 @when(u'I fill out the playlist form with')
@@ -64,14 +63,11 @@ def step_impl(context):
         for heading in row.headings:
             if heading != 'genre':
                 context.browser.fill(heading, row[heading])
-        # Seleccionar el género deseado
         genre = row['genre']
-        # Hacer clic en el género deseado en el formulario
         context.browser.find_option_by_text(genre).first.click()
 
 @when(u'I submit the playlist form')
 def step_impl(context):
-    # Enviar el formulario
     context.browser.find_by_css('.genericButton[type="submit"]').first.click()
 
 @then('I\'m on the details page for playlist by "{username}"')
