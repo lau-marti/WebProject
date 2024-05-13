@@ -5,8 +5,7 @@ use_step_matcher("parse")
 @when('I delete the playlist with name "{name}"')
 def step_when_i_delete_the_playlist(context, name):
 
-    context.browser.visit(context.get_url('web:playlist_list'))
-
+    context.browser.visit(context.get_url('web:delete_playlist'))
     delete_button = context.browser.find_by_css('.deleteButton')
     delete_button.click()
 

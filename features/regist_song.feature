@@ -3,7 +3,7 @@ Feature: Register Song
   As a user
   I want to register a dish in the corresponding restaurant together with its details
 
-  Background: There is a registered user and restaurant
+  Background: There is a registered user and playlist
     Given Exists a user "user" with password "password"
     And Exists a user "user1" with password "password"
     And Exists playlist registered by "user"
@@ -23,16 +23,14 @@ Feature: Register Song
     And The list contains 1 songs
     And There are 1 songs
 
-  Scenario: Register two songs to diferent playlists.
+  Scenario: Try to register a song without login
+    When I view the details for playlist "Famous"
+    And I search and add song "Hello" to playlist "Famous"
+    Then I'm redirected to the login form
+    
+  Scenario: Try to register a song to a playlist that you are not the owner
     Given I login as user "user1" with password "password"
-    And Exists song at playlist "Famous" by "user"
-      | name     |album   | artists |
-      | Hello    |25      | Adele, Pepito    |
-    When I view the details for playlist "Unknown"
-    And I search and add song "Hello" to playlist "Unknown"
-    Then I'm viewing a playlist songs list containing
-      | name     |
-      | Hello    |
-    And The list contains 1 songs
-    And There are 2 songs
+    When I view the details for playlist "Famous"
+    And I search and add song "Hello" to playlist "Famous"
+    Then Server responds with page containing "403 Forbidden"
 

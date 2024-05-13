@@ -10,12 +10,17 @@ Feature: Delete Playlists
       | name            | date        | genres    |
       | The First       | 1970-01-01  | pop, rock |
 
-Scenario: Delete my playlist
+  Scenario: Delete my playlist
     Given I login as user "user" with password "password"
     When I delete the playlist with name "The First"
     Then The playlist with name "The First" should not exist
 
-Scenario: Attempt to delete another user's playlist
+  Scenario: Cannot  delete another user's playlist
     Given I login as user "user1" with password "password1"
     When I attempt to delete the playlist with name "The First"
-    And The playlist with name "The First" should still exist
+    Then The playlist with name "The First" should still exist
+    
+  Scenario: Try to delete another user's playlist
+    Given I login as user "user1" with password "password1"
+    When I delete the playlist with name "The First"
+    Then Server responds with page containing "403 Forbidden"

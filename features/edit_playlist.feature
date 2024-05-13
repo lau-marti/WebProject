@@ -36,3 +36,9 @@ Feature: Edit Playlist
       | description         |
       | New american Hits   |
     Then Server responds with page containing "403 Forbidden"
+
+  Scenario: Force edit playlist but not logged in
+    When I edit the playlist with name "Hits"
+      | description         |
+      | New american Hits   |
+    Then I'm redirected to the login form
