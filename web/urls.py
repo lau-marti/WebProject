@@ -20,7 +20,7 @@ urlpatterns = [
          name='playlist_delete'),
 
     #Playlist details, ex.: /playlists/1/
-    path('playlists/<int:pk>/',
+    path('playlists/<int:pk>',
          PlaylistDetail.as_view(),
          name='playlist_detail'),
 
