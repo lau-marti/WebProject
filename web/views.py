@@ -16,25 +16,23 @@ class LoginRequiredMixin(object):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
 
 class CheckIsOwnerMixin(object):
-    def get_object(self, *args, **kwargs):
-        obj = super(CheckIsOwnerMixin, self).get_object(*args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        playlist_pk = self.kwargs.get('pk')
+        playlist = Playlist.objects.get(pk=playlist_pk)
+        if not playlist.user == self.request.user:
+            raise PermissionDenied("No tienes permiso para acceder a este recurso.")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
         if not obj.user == self.request.user:
-            raise PermissionDenied
+            raise PermissionDenied("No tienes permiso para acceder a este recurso.")
         return obj
+
 
 class LoginRequiredCheckIsOwnerUpdateView(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
     template_name ='form.html'
-    def get(self, request, *args, **kwargs):
-        if request.method == 'GET':
-            playlist_pk = self.kwargs.get('pk')
-            try:
-                playlist = Playlist.objects.get(pk=playlist_pk)
-                # Verificar si el usuario actual es el creador de la playlist
-                if playlist.user != request.user:
-                    # Si el usuario no es el creador, devolver un error 403 Forbidden
-                    return render(request, '403.html', status=403)
-            except Playlist.DoesNotExist:
-                raise Http404("La playlist no existe")
+
 
 class PlaylistList(ListView):
     model = Playlist
@@ -47,21 +45,11 @@ class PlaylistList(ListView):
             context['user_playlists'] = self.request.user.playlist_set.all()
         return context
 
-class DeletePlaylist(DeleteView):
+class DeletePlaylist(LoginRequiredMixin,CheckIsOwnerMixin, DeleteView):
     model = Playlist
     template_name = 'playlist_confirm_delete.html'  # Plantilla para confirmar la eliminación
     success_url = reverse_lazy('web:playlist_list')  # URL a la que se redireccionará después de la eliminación
-    def get(self, request, *args, **kwargs):
-        if request.method == 'GET':
-            playlist_pk = self.kwargs.get('pk')
-            try:
-                playlist = Playlist.objects.get(pk=playlist_pk)
-                # Verificar si el usuario actual es el creador de la playlist
-                if playlist.user != request.user:
-                    # Si el usuario no es el creador, devolver un error 403 Forbidden
-                    return render(request, '403.html', status=403)
-            except Playlist.DoesNotExist:
-                raise Http404("La playlist no existe")
+
 
 
 class PlaylistCreate(LoginRequiredMixin, CreateView):
@@ -81,34 +69,14 @@ class PlaylistDetail(DetailView):
         return context
 
 
-class SongCreate(CreateView):
+class SongCreate(LoginRequiredMixin,CheckIsOwnerMixin, CreateView):
     model = Song
     fields = ['title', 'album', 'artists']
     template_name = 'add_song.html'
 
-    def get(self, request, *args, **kwargs):
-        if request.method == 'GET':
-            playlist_pk = self.kwargs.get('pk')
-            try:
-                playlist = Playlist.objects.get(pk=playlist_pk)
-                # Verificar si el usuario actual es el creador de la playlist
-                if playlist.user != request.user:
-                    # Si el usuario no es el creador, devolver un error 403 Forbidden
-                    return render(request, '403.html', status=403)
-            except Playlist.DoesNotExist:
-                raise Http404("La playlist no existe")
-
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
-            playlist_pk = self.kwargs.get('pk')
-            try:
-                playlist = Playlist.objects.get(pk=playlist_pk)
-                # Verificar si el usuario actual es el creador de la playlist
-                if playlist.user != request.user:
-                    # Si el usuario no es el creador, devolver un error 403 Forbidden
-                    return render(request, '403.html', status=403)
-            except Playlist.DoesNotExist:
-                raise Http404("La playlist no existe")
+
             # Obtener los datos de la solicitud POST
             nombre_cancion = request.POST.get('nombre_cancion')
             nombre_artista = request.POST.get('nombre_artista')
@@ -143,20 +111,8 @@ class SongCreate(CreateView):
             return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 
-class SongDelete(DeleteView):
+class SongDelete( LoginRequiredMixin, CheckIsOwnerMixin, DeleteView):
     model = Song
-
-    def get(self, request, *args, **kwargs):
-        if request.method == 'GET':
-            playlist_pk = self.kwargs.get('pk')
-            try:
-                playlist = Playlist.objects.get(pk=playlist_pk)
-                # Verificar si el usuario actual es el creador de la playlist
-                if playlist.user != request.user:
-                    # Si el usuario no es el creador, devolver un error 403 Forbidden
-                    return render(request, '403.html', status=403)
-            except Playlist.DoesNotExist:
-                raise Http404("La playlist no existe")
 
     def post(self, request, *args, **kwargs):
         # Obtener la instancia de la lista de reproducción
@@ -170,39 +126,40 @@ class SongDelete(DeleteView):
         song.delete()
         # Redirigir a la página de detalles de la lista de reproducción
         return redirect('web:playlist_detail', pk=playlist.id)
-def add_song(request, pk):
-    if request.method == 'POST':
-        # Obtener los datos de la solicitud POST
-        nombre_cancion = request.POST.get('nombre_cancion')
-        nombre_artista = request.POST.get('nombre_artista')
-        nombre_album = request.POST.get('nombre_album')
 
-        # Obtener o crear el artista
-        artista, _ = Artist.objects.get_or_create(name=nombre_artista)
+# def add_song(request, pk):
+#     if request.method == 'POST':
+#         # Obtener los datos de la solicitud POST
+#         nombre_cancion = request.POST.get('nombre_cancion')
+#         nombre_artista = request.POST.get('nombre_artista')
+#         nombre_album = request.POST.get('nombre_album')
+#
+#         # Obtener o crear el artista
+#         artista, _ = Artist.objects.get_or_create(name=nombre_artista)
+#
+#         # Crear la canción y asociar el artista
+#         cancion = Song.objects.create(title=nombre_cancion, album=nombre_album)
+#         cancion.artists.add(artista)
+#
+#         # Agregar la canción a la playlist
+#         playlist = Playlist.objects.get(pk=pk)
+#         playlist.songs.add(cancion)
+#         playlist_detail_url = reverse('playlist_detail', args=[pk])
+#
+#         # Devolver una respuesta JSON
+#         return JsonResponse({'mensaje': 'Canción agregada a la playlist correctamente'})
+#     else:
+#         # Si la solicitud no es POST, devolver un error
+#         return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-        # Crear la canción y asociar el artista
-        cancion = Song.objects.create(title=nombre_cancion, album=nombre_album)
-        cancion.artists.add(artista)
-
-        # Agregar la canción a la playlist
-        playlist = Playlist.objects.get(pk=pk)
-        playlist.songs.add(cancion)
-        playlist_detail_url = reverse('playlist_detail', args=[pk])
-
-        # Devolver una respuesta JSON
-        return JsonResponse({'mensaje': 'Canción agregada a la playlist correctamente'})
-    else:
-        # Si la solicitud no es POST, devolver un error
-        return JsonResponse({'error': 'Método no permitido'}, status=405)
-
-def delete_song(request, song_id, playlist_id):
-    if request.method == 'POST':
-        playlist = get_object_or_404(Playlist, pk=playlist_id)
-        song = get_object_or_404(Song, id=song_id)
-        playlist.songs.remove(song)
-        return redirect(playlist.get_absolute_url())
-    else:
-        return JsonResponse({'error': 'Método no permitido'}, status=405)
+# def delete_song(request, song_id, playlist_id):
+#     if request.method == 'POST':
+#         playlist = get_object_or_404(Playlist, pk=playlist_id)
+#         song = get_object_or_404(Song, id=song_id)
+#         playlist.songs.remove(song)
+#         return redirect(playlist.get_absolute_url())
+#     else:
+#         return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 
 def search_playlists(request):
