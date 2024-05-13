@@ -38,7 +38,6 @@ def create_playlist(context, playlist_name, username):
     # Agregar la lista de reproducción al contexto para que esté disponible en otros pasos
     context.playlist = playlist
 
-
 @given('Playlist "{playlist_song}" registered by "{user}" contains the songs')
 def add_songs_to_playlist(context, playlist_song, user):
     # Código para agregar canciones a la lista de reproducción en la base de datos de prueba
