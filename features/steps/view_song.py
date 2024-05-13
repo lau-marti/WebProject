@@ -21,18 +21,12 @@ def step_impl(context, playlist_name):
     add_button.click()
 
 
-@when('I click on the song "{song_name}"')
+@then('I click on the song "{song_name}"')
 def step_impl(context, song_name):
-    song_link = context.browser.find_by_text(song_name)
-    song_link.submit()
-    time.sleep(10)
+    context.browser.find_by_text(song_name).first.click()
 
-
-@then('I\'m viewing the details of a song')
-def step_impl(context):
-    for row in context.table:
-        assert context.song.name == row['name']
-        assert context.song.artist == row['artist']
-        assert context.song.album == row['album']
-        assert context.song.duration == row['duration']
-        assert context.song.url == row['URL']
+@then('I\'m viewing the details of "{song_name}"')
+def step_impl(context, song_name):
+    from web.models import Song
+    song = Song.objects.get(title=song_name)
+    context.browser.url.endswith("/songs/"+str(song.id))
