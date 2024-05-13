@@ -4,7 +4,7 @@ from django.views.generic import DetailView, ListView
 
 from web import views
 from web.forms import PlaylistForm
-from web.views import PlaylistCreate, PlaylistDetail, LoginRequiredCheckIsOwnerUpdateView, SongCreate, add_song, delete_song, PlaylistList, DeletePlaylist, SongDelete, search_playlists
+from web.views import PlaylistCreate, PlaylistDetail, LoginRequiredCheckIsOwnerUpdateView, SongCreate, PlaylistList, DeletePlaylist, SongDelete, search_playlists
 from web.models import Song, Playlist
 
 app_name = "web"
@@ -48,7 +48,7 @@ urlpatterns = [
          SongCreate.as_view(),
          name='song_create'),
 
-    path('playlists/<int:pk>/songs/add_song', add_song, name='add_song'),
+    ##path('playlists/<int:pk>/songs/add_song', add_song, name='add_song'),
 
     path('playlists/<int:pk>/songs/<int:pkr>/delete',
          SongDelete.as_view(),

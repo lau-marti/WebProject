@@ -32,7 +32,7 @@
                         <div style="display: flex; justify-content: space-between;align-items: center">
                             <a  class="playlistButton myplaylists" href="{% url 'web:playlist_detail' playlist.id %}">{{ playlist.name }}</a>
                             {% if playlist.user == user %}
-                            <a class="deleteButton" style="height: 12px" href="{% url 'web:playlist_delete' playlist.id %}">Delete</a>
+                            <a class="deleteButton" data-pk={{playlist.name}} style="height: 12px" href="{% url 'web:playlist_delete' playlist.id %}">Delete</a>
                             {% endif %}
                         </div>
                     </li>

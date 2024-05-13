@@ -23,12 +23,12 @@ Feature: Edit Playlist
   Scenario: Try to edit playlist and the owner edit button
     Given I login as user "user1" with password "password"
     When I view the details for playlist "Hits"
-    Then There is "Editar Playlist" link available
+    Then There is "Edit Playlist" link available
 
   Scenario: Try to edit playlist but not the owner no edit button
     Given I login as user "user2" with password "password"
     When I view the details for playlist "Hits"
-    Then There is no "Editar Playlist" link available
+    Then There is no "Edit Playlist" link available
 
   Scenario: Force edit playlist but not the owner permission exception
     Given I login as user "user2" with password "password"
@@ -36,7 +36,9 @@ Feature: Edit Playlist
       | description         |
       | New american Hits   |
     Then Server responds with page containing "403 Forbidden"
-    When I view the details for playlist "Hits"
-    Then I'm viewing the details page for playlist by "user1"
-      | name      | description              | genres        |
-      | Hits      | New spanish Hits         | pop           |
+
+  Scenario: Force edit playlist but not logged in
+    When I edit the playlist with name "Hits"
+      | description         |
+      | New american Hits   |
+    Then I'm redirected to the login form

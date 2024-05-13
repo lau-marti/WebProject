@@ -10,7 +10,7 @@ class Song(models.Model):
     title = models.CharField(max_length=100)
     album = models.CharField(max_length=100)
     duration = models.DurationField(null=True)
-    lyrics = models.TextField(null=True)
+    #lyrics = models.TextField(null=True)
     artists = models.ManyToManyField('Artist', related_name='artists_to_song')
     genre = models.ManyToManyField('Genre', related_name='genres_to_song')
     url_imagen = models.URLField(null=True)  # Campo para la URL de la imagen
