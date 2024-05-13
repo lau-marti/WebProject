@@ -41,8 +41,8 @@ def step_impl(context, playlist_name, username):
 def step_impl(context, song_title, playlist_name):
     from web.models import Playlist
     playlist = Playlist.objects.get(name=playlist_name)
-    context.browser.visit(context.get_url('web:song_create', playlist.pk))
-    if context.browser.url == context.get_url('web:song_create', playlist.pk):
+    context.browser.visit(context.get_url('web:song_create', playlist.id))
+    if context.browser.url == context.get_url('web:song_create', playlist.id) and context.browser.title != "403 Forbidden":
         context.browser.fill('search', song_title)
         context.browser.find_by_css('div#content button').click()
         # Select the song from the search results
@@ -50,8 +50,6 @@ def step_impl(context, song_title, playlist_name):
         time.sleep(2)
         context.browser.find_by_id('add_0').click()
         time.sleep(2)
-
-
 
 
 @then('I\'m viewing the details page for song at playlist "{playlist_name}" by "{username}"')

@@ -36,7 +36,7 @@
     {% for song in playlist.songs.all %}
 
         <li style="list-style-type:none">
-            <div style="display: flex; justify-content: space-between; align-items: center">
+            <div class="playlistButton" style="display: flex; justify-content: space-between; align-items: center">
                 <img style="height: 40px; width: 40px; border-radius: 10px" src="{{ song.url_imagen }}" alt="Song Image">
                 <!-- Enlace al detalle de la canción -->
                 <a style="text-decoration: none; font-size: 20px;" href="{% url 'web:song_detail' pk=song.pk %}" class="Paragraf1">{{ song.title }}</a>
