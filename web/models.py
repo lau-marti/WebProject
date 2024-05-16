@@ -56,3 +56,7 @@ class Playlist(models.Model):
 
     def get_absolute_url(self):
         return reverse('web:playlist_detail', kwargs={'pk': self.pk})
+
+    def delete(self, *args, **kwargs):
+        self.songs.all().delete()
+        super().delete(*args, **kwargs)
