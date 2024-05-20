@@ -7,9 +7,9 @@
 <div class="container">
     <div class="playlist-header" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
         <h1 class="PlaylistName"><span property="name"> {{ playlist.name }}</span></h1>
-            <span style="color: white;">
+            <p style="color: white;">
                 Genre/s:
-                {% with genres= playlist.genres.all  %}
+                {% with genres=playlist.genres.all  %}
                     {% for genre in genres %}
                         {% if not forloop.last %}
                             {{ genre }},
@@ -18,11 +18,11 @@
                         {% endif %}
                     {% endfor %}
                 {% endwith %}
-            </span>
+            </p>
 
         <p class="description">Description: <span property="description"> {{playlist.description}}</span></p>
         <p class="user_id">Playlist created by:<span property="creator"> {{playlist.user}}</span></p>
-        <span  property="dateCreated"> {{playlist.date}} </span>
+        <span  property="dateCreated" content="{{playlist.date}}" > </span>
         {% if user.is_authenticated and user == playlist.user %}
             <div style="display: flex; justify-content: center; align-items: center">
                 <a href="{% url 'web:playlist_edit' playlist.id %}">
@@ -36,8 +36,9 @@
     </div>
         <p>
             {% with playlist.songs.all|length as songCount %}
-                from <span property="numTracks">{{ songCount }}
-                </span> song{{ songCount|pluralize }}
+                <span property="numTracks" content="{{ songCount }}">
+                </span>
+            {% endwith %}
         </p>
 
 
