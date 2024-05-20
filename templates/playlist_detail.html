@@ -3,24 +3,26 @@
 {% block title %}Detalles de la Playlist{% endblock %}
 
 {% block content %}
+<span vocab="https://schema.org/" typeof="MusicPlaylist">
 <div class="container">
     <div class="playlist-header" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
-        <h1 class="PlaylistName">{{ playlist.name }}</h1>
+        <h1 class="PlaylistName"><span property="name"> {{ playlist.name }}</span></h1>
             <span style="color: white;">
                 Genre/s:
-                {% with genres=playlist.genres.all %}
+                {% with genres= playlist.genres.all  %}
                     {% for genre in genres %}
                         {% if not forloop.last %}
                             {{ genre }},
                         {% else %}
-                            {{ genre }}
+                            <span property="genre">{{ genre }}</span>
                         {% endif %}
                     {% endfor %}
                 {% endwith %}
             </span>
 
-        <p class="description">Description: {{playlist.description}}</p>
-        <p class="user_id">Playlist created by: {{playlist.user}}</p>
+        <p class="description">Description: <span property="description"> {{playlist.description}}</span></p>
+        <p class="user_id">Playlist created by:<span property="creator"> {{playlist.user}}</span></p>
+        <span  property="dateCreated"> {{playlist.date}} </span>
         {% if user.is_authenticated and user == playlist.user %}
             <div style="display: flex; justify-content: center; align-items: center">
                 <a href="{% url 'web:playlist_edit' playlist.id %}">
@@ -32,14 +34,22 @@
             </div>
         {% endif %}
     </div>
-    <ul class="cançons">
-    {% for song in playlist.songs.all %}
+        <p>
+            {% with playlist.songs.all|length as songCount %}
+                from <span property="numTracks">{{ songCount }}
+                </span> song{{ songCount|pluralize }}
+        </p>
 
-        <li style="list-style-type:none">
+
+
+    <ul class="cançons" rel="tracks">
+    {% for song in playlist.songs.all %}
+        <li style="list-style-type:none" resource="#song{{song.pk}}" typeof="MusicRecording">
             <div class="playlistButton" style="display: flex; justify-content: space-between; align-items: center">
                 <img style="height: 40px; width: 40px; border-radius: 10px" src="{{ song.url_imagen }}" alt="Song Image">
                 <!-- Enlace al detalle de la canción -->
-                <a style="text-decoration: none; font-size: 20px;" href="{% url 'web:song_detail' pk=song.pk %}" class="Paragraf1">{{ song.title }}</a>
+                <span property="name" content = "{{ song.title }}"></span>
+                <a style="text-decoration: none; font-size: 20px;" href="{% url 'web:song_detail' pk=song.pk %}" class="Paragraf1">{{ song.title }} </a>
                 <span style="color: white;">
                     {% for artist in song.artists.all %}
                         {{ artist.name }}
@@ -56,4 +66,5 @@
     {% endfor %}
     </ul>
 </div>
+</span>
 {% endblock %}
