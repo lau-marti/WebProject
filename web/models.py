@@ -26,7 +26,7 @@ class Song(models.Model):
         return reverse('web:song_detail.html', kwargs={'pkr': self.song.pk, 'pk': self.pk})
 
     def delete(self, *args, **kwargs):
-        # Eliminar canciones no referenciadas por otra playlist
+
         artists_to_delete = []
         for artist in self.artists.all():
             if not Song.objects.filter(artists=artist).exclude(pk=self.pk).exists():
@@ -34,7 +34,6 @@ class Song(models.Model):
         for artist in artists_to_delete:
             artist.delete()
 
-        # Llamar al método delete() de la superclase para eliminar la playlist
         super().delete(*args, **kwargs)
 
 
@@ -73,7 +72,7 @@ class Playlist(models.Model):
         return reverse('web:playlist_detail', kwargs={'pk': self.pk})
 
     def delete(self, *args, **kwargs):
-        # Eliminar canciones no referenciadas por otra playlist
+
         songs_to_delete = []
         for song in self.songs.all():
             if not Playlist.objects.filter(songs=song).exclude(pk=self.pk).exists():
@@ -81,6 +80,5 @@ class Playlist(models.Model):
         for song in songs_to_delete:
             song.delete()
 
-        # Llamar al método delete() de la superclase para eliminar la playlist
         super().delete(*args, **kwargs)
 
