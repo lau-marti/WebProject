@@ -22,7 +22,7 @@
 
         <p class="description">Description: <span property="description"> {{playlist.description}}</span></p>
         <p class="user_id">Playlist created by:<span property="creator"> {{playlist.user}}</span></p>
-        <span  property="dateCreated" content="{{playlist.date}}" > </span>
+        <span  property="dateCreated" content="{{playlist.date}}"> </span>
         {% if user.is_authenticated and user == playlist.user %}
             <div style="display: flex; justify-content: center; align-items: center">
                 <a href="{% url 'web:playlist_edit' playlist.id %}">
@@ -34,12 +34,12 @@
             </div>
         {% endif %}
     </div>
-        <p>
-            {% with playlist.songs.all|length as songCount %}
-                <span property="numTracks" content="{{ songCount }}">
-                </span>
-            {% endwith %}
-        </p>
+    <p>
+        {% with playlist.songs.all|length as songCount %}
+        <span property="numTracks" content="{{ songCount }}">
+        </span>
+        {% endwith %}
+    </p>
 
 
 
@@ -47,13 +47,13 @@
     {% for song in playlist.songs.all %}
         <li style="list-style-type:none" resource="#song{{song.pk}}" typeof="MusicRecording">
             <div class="playlistButton" style="display: flex; justify-content: space-between; align-items: center">
-                <img style="height: 40px; width: 40px; border-radius: 10px" src="{{ song.url_imagen }}" alt="Song Image">
+                <img style="height: 40px; width: 40px; border-radius: 10px" src="{{ song.url_imagen }}" alt="Song Image" property="image">
                 <!-- Enlace al detalle de la canción -->
                 <span property="name" content = "{{ song.title }}"></span>
                 <a style="text-decoration: none; font-size: 20px;" href="{% url 'web:song_detail' pk=song.pk %}" class="Paragraf1">{{ song.title }} </a>
                 <span style="color: white;">
                     {% for artist in song.artists.all %}
-                        {{ artist.name }}
+                       <span property= "byArtist"> {{ artist.name }}</span>
                     {% endfor %}
                 </span>
                 {% if user.is_authenticated and user == playlist.user %}

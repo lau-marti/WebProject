@@ -11,15 +11,15 @@
         </div>
         <div class="column" style="background-color:#424949" >
             <h1 style="text-align: left; color: white" property="name">{{ song.title }}</h1>
-            <p property="byArtist"><strong>Artists:</strong>
+            <p ><strong>Artists:</strong>
             {% for artist in song.artists.all %}
-                {{ artist.name }}
+                <span property="byArtist">{{ artist.name }}</span>
                 {% if not forloop.last %}, {% endif %}
             {% endfor %}
             </p>
             <p property="inAlbum"><strong>Album:</strong> {{ song.album }}</p>
             <p property="duration"><strong>Duration:</strong> {{ song.duration }}</p>
-            <p property="archiveAt"><strong>URL:</strong> <a style="color: #4ac1f7" href="{{ song.url_cancion }}">{{ song.url_cancion }}</a></p>
+            <p property="archivedAt"><strong>URL:</strong> <a style="color: #4ac1f7" href="{{ song.url_cancion }}">{{ song.url_cancion }}</a></p>
         </div>
     </div>
 </span>
