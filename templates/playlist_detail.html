@@ -51,11 +51,13 @@
                 <!-- Enlace al detalle de la canción -->
                 <span property="name" content = "{{ song.title }}"></span>
                 <a style="text-decoration: none; font-size: 20px;" href="{% url 'web:song_detail' pk=song.pk %}" class="Paragraf1">{{ song.title }} </a>
-                <span style="color: white;">
+                <p style="color: white;">
                     {% for artist in song.artists.all %}
-                       <span property= "byArtist"> {{ artist.name }}</span>
+                       <span property="byArtist" resource="#artist{{artist.pk}}" typeof="MusicGroup">
+                                <span property="name">{{ artist.name }}</span>
+                            </span>
                     {% endfor %}
-                </span>
+                </p>
                 {% if user.is_authenticated and user == playlist.user %}
                     <form action="{% url 'web:song_delete' playlist.id song.id %}" method="POST" class="inline">
                         {% csrf_token %}

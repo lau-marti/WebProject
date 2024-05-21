@@ -11,11 +11,13 @@
         </div>
         <div class="column" style="background-color:#424949" >
             <h1 style="text-align: left; color: white" property="name">{{ song.title }}</h1>
-            <p ><strong>Artists:</strong>
-            {% for artist in song.artists.all %}
-                <span property="byArtist">{{ artist.name }}</span>
-                {% if not forloop.last %}, {% endif %}
-            {% endfor %}
+            <p><strong>Artists:</strong>
+                {% for artist in song.artists.all %}
+                    <span property="byArtist" resource="#artist{{artist.pk}}" typeof="MusicGroup">
+                                <span property="name">{{ artist.name }}</span>
+                            </span>
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
             </p>
             <p property="inAlbum"><strong>Album:</strong> {{ song.album }}</p>
             <p property="duration"><strong>Duration:</strong> {{ song.duration }}</p>
